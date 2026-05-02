@@ -1,0 +1,105 @@
+/* ═══════════════════════════════════════════════════════════
+   ShelfIQ — Prama "Intelligent Aperture" Design System
+   Custom styles beyond Tailwind utilities
+   ═══════════════════════════════════════════════════════════ */
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #0b1323; }
+::-webkit-scrollbar-thumb { background: #2d3546; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #869394; }
+
+/* KPI Card */
+.kpi-card { background: #182030; border-radius: 12px; padding: 20px; position: relative; transition: transform 0.15s ease; }
+.kpi-card:hover { transform: translateY(-2px); }
+.kpi-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; border-radius: 0 0 12px 12px; }
+.kpi-card.accent-primary::after { background: rgba(110,230,238,0.4); }
+.kpi-card.accent-error::after   { background: rgba(255,180,171,0.4); }
+.kpi-card.accent-secondary::after { background: rgba(206,203,91,0.4); }
+.kpi-card.accent-dim::after     { background: rgba(94,216,224,0.4); }
+
+.kpi-icon-box { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+.kpi-icon-box.primary   { background: rgba(110,230,238,0.1); }
+.kpi-icon-box.error     { background: rgba(255,180,171,0.1); }
+.kpi-icon-box.secondary { background: rgba(206,203,91,0.1); }
+.kpi-icon-box.dim       { background: rgba(94,216,224,0.1); }
+
+.kpi-chip { font-size: 0.68rem; font-weight: 600; padding: 3px 8px; border-radius: 4px; }
+.kpi-chip.primary   { background: rgba(110,230,238,0.1); color: #6ee6ee; }
+.kpi-chip.error     { background: rgba(255,180,171,0.1); color: #ffb4ab; }
+.kpi-chip.secondary { background: rgba(206,203,91,0.1);  color: #cecb5b; }
+.kpi-chip.dim       { background: rgba(94,216,224,0.1);  color: #5ed8e0; }
+
+.kpi-label { color: #bcc9ca; font-size: 0.82rem; font-weight: 500; margin-bottom: 2px; }
+.kpi-value { color: #dbe2f9; font-size: 1.8rem; font-weight: 900; line-height: 1.1; letter-spacing: -0.02em; }
+
+/* Panel */
+.panel { background: #182030; border-radius: 12px; overflow: hidden; }
+.panel-low { background: #141b2c; border-radius: 12px; overflow: hidden; }
+.panel-header { padding: 18px 20px; display: flex; justify-content: space-between; align-items: center; }
+
+/* Alert Card */
+.alert-card { background: #222a3b; border-radius: 12px; padding: 14px; border-left: 4px solid; transition: background 0.2s ease; margin-bottom: 12px; }
+.alert-card:hover { background: #31394b; }
+.alert-card.severity-critical { border-left-color: #ffb4ab; }
+.alert-card.severity-warning  { border-left-color: #cecb5b; }
+.alert-card.severity-info     { border-left-color: #6ee6ee; }
+
+.alert-badge { font-size: 0.65rem; font-weight: 700; padding: 2px 8px; border-radius: 3px; text-transform: uppercase; letter-spacing: 0.03em; }
+.alert-badge.critical { background: rgba(255,180,171,0.1); color: #ffb4ab; }
+.alert-badge.warning  { background: rgba(206,203,91,0.1);  color: #cecb5b; }
+.alert-badge.info     { background: rgba(110,230,238,0.1); color: #6ee6ee; }
+
+/* Compliance bar */
+.compliance-bar-track { height: 6px; background: #222a3b; border-radius: 3px; overflow: hidden; }
+.compliance-bar-fill { height: 100%; border-radius: 3px; transition: width 0.6s ease; }
+.compliance-bar-fill.healthy { background: #6ee6ee; }
+.compliance-bar-fill.warning { background: #ffb4ab; }
+
+/* Task card */
+.task-card { background: #222a3b; border-radius: 8px; padding: 12px; border-left: 3px solid; margin-bottom: 8px; }
+.task-card.todo     { border-left-color: #ffb4ab; }
+.task-card.progress { border-left-color: #cecb5b; }
+.task-card.complete { border-left-color: #6ee6ee; }
+
+/* SKU status */
+.sku-status { font-size: 0.68rem; font-weight: 600; padding: 3px 10px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.03em; }
+.sku-status.in-stock  { background: rgba(110,230,238,0.1); color: #6ee6ee; }
+.sku-status.low-stock { background: rgba(206,203,91,0.1);  color: #cecb5b; }
+.sku-status.out       { background: rgba(255,180,171,0.1); color: #ffb4ab; }
+
+/* Nav item */
+.nav-item { display: block; padding: 10px 16px; border-radius: 6px; font-size: 0.88rem; color: #8896a7; cursor: pointer; transition: all 0.2s ease; border-right: 3px solid transparent; text-decoration: none; }
+.nav-item:hover { background: rgba(110,230,238,0.04); }
+.nav-item.active { background: rgba(110,230,238,0.06); border-right-color: #6ee6ee; color: #6ee6ee; font-weight: 600; }
+
+/* Section header */
+.section-label { color: #6ee6ee; font-size: 0.68rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 4px; }
+.section-title { color: #dbe2f9; font-size: 1.8rem; font-weight: 900; letter-spacing: -0.02em; line-height: 1.15; }
+
+/* Buttons */
+.btn-primary { background: linear-gradient(135deg, #4ecad2, #6ee6ee); color: #00373a; border: none; padding: 10px 24px; border-radius: 8px; font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: all 0.2s ease; }
+.btn-primary:hover { filter: brightness(1.1); transform: translateY(-1px); }
+.btn-ghost { background: #222a3b; color: #dbe2f9; border: none; padding: 10px 20px; border-radius: 8px; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
+.btn-ghost:hover { background: #31394b; }
+
+/* Detection item */
+.detection-item { padding: 12px 16px; display: flex; align-items: flex-start; gap: 12px; transition: background 0.15s ease; }
+.detection-item:hover { background: rgba(110,230,238,0.03); }
+.detection-item + .detection-item { border-top: 1px solid rgba(61,73,74,0.1); }
+.detection-icon { width: 32px; height: 32px; border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 0.85rem; }
+.detection-icon.critical { background: rgba(255,180,171,0.1); border-left: 3px solid #ffb4ab; }
+.detection-icon.warning  { background: rgba(206,203,91,0.1);  border-left: 3px solid #cecb5b; }
+.detection-icon.success  { background: rgba(110,230,238,0.1); border-left: 3px solid #6ee6ee; }
+.detection-icon.info     { background: rgba(188,201,202,0.1); border-left: 3px solid #bcc9ca; }
+
+/* Animations */
+@keyframes pulse-glow { 0%, 100% { box-shadow: 0 0 8px rgba(110,230,238,0.3); } 50% { box-shadow: 0 0 20px rgba(110,230,238,0.6); } }
+.pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.fade-in { animation: fadeIn 0.3s ease-out; }
+
+/* Tab buttons */
+.tab-btn { padding: 8px 16px; border-radius: 6px; font-size: 0.82rem; font-weight: 500; color: #bcc9ca; cursor: pointer; transition: all 0.2s; background: transparent; border: none; }
+.tab-btn.active { background: rgba(110,230,238,0.12); color: #6ee6ee; font-weight: 600; }
+.tab-btn:hover:not(.active) { background: rgba(110,230,238,0.04); }

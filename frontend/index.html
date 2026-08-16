@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShelfIQ — AI Computer Vision & Shelf Intelligence Platform</title>
+    <meta name="description" content="ShelfIQ Smart Retail & Shelf Intelligence Dashboard — AI-powered real-time computer vision shelf monitoring, demand forecasting, planogram compliance, and store optimization.">
+    <link rel="icon" href="https://img.icons8.com/fluency/48/barcode-scanner.png">
+
+    <!-- Google Fonts: Plus Jakarta Sans & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+
+    <!-- Custom CSS Design System -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div id="app-layout">
+        <!-- ═══════════════ MODERN SIDEBAR ═══════════════ -->
+        <aside id="sidebar" class="app-sidebar">
+            <!-- Brand Header -->
+            <div class="sidebar-header">
+                <a href="#/dashboard" class="brand-logo">
+                    <div class="brand-icon-wrapper">
+                        <i data-lucide="scan-barcode" class="w-5 h-5"></i>
+                    </div>
+                    <div class="brand-text">
+                        <div class="brand-text-name">Shelf<span>IQ</span></div>
+                        <div class="brand-subtitle">Vision AI Core</div>
+                    </div>
+                </a>
+                <button id="sidebar-collapse-btn" class="sidebar-toggle-btn" title="Toggle Sidebar">
+                    <i data-lucide="chevron-left" class="w-4 h-4"></i>
+                </button>
+            </div>
+
+            <!-- Navigation Links -->
+            <nav id="nav-list" class="sidebar-nav"></nav>
+
+            <!-- Sidebar Footer: User Profile -->
+            <div class="sidebar-footer">
+                <div class="user-profile-card">
+                    <div class="user-avatar">AS</div>
+                    <div class="user-info">
+                        <div class="user-name">Arjun Sharma</div>
+                        <div class="user-role">Store Operations Lead</div>
+                    </div>
+                    <a href="#/settings" class="text-secondary hover:text-primary transition-colors" title="Settings">
+                        <i data-lucide="settings" class="w-4 h-4"></i>
+                    </a>
+                </div>
+            </div>
+        </aside>
+
+        <!-- ═══════════════ MAIN WRAPPER ═══════════════ -->
+        <div class="main-wrapper">
+            <!-- Top Navbar Header -->
+            <header class="top-header">
+                <div class="header-left">
+                    <button id="mobile-menu-btn" class="mobile-menu-btn">
+                        <i data-lucide="menu" class="w-5 h-5"></i>
+                    </button>
+
+                    <!-- Active Store Selector -->
+                    <div class="store-selector-wrapper">
+                        <i data-lucide="store" class="w-4 h-4 text-secondary"></i>
+                        <select id="store-selector" class="store-select-field">
+                            <option value="STORE01">Store #01 — Mumbai Flagship</option>
+                            <option value="STORE02">Store #02 — Ahmedabad CG Road</option>
+                            <option value="STORE03">Store #03 — Delhi Connaught Pl.</option>
+                        </select>
+                    </div>
+
+                    <!-- Real-Time CV Pipeline Status Pill -->
+                    <div class="pipeline-status-pill">
+                        <span class="pulse-dot"></span>
+                        <span>CV Pipeline: Active • 30 FPS</span>
+                    </div>
+                </div>
+
+                <div class="header-right">
+                    <!-- Quick Date Range Filter -->
+                    <div class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg border border-subtle bg-surface-1 text-xs font-semibold text-secondary">
+                        <i data-lucide="calendar" class="w-3.5 h-3.5"></i>
+                        <span>Live • Today</span>
+                    </div>
+
+                    <!-- Theme Toggle (Dark / Light) -->
+                    <button id="theme-toggle-btn" class="header-action-btn" title="Toggle Dark/Light Mode">
+                        <i data-lucide="sun" class="w-4 h-4 theme-icon-sun"></i>
+                        <i data-lucide="moon" class="w-4 h-4 theme-icon-moon hidden"></i>
+                    </button>
+
+                    <!-- Notification Bell with Counter & Dropdown -->
+                    <div class="relative">
+                        <button id="notif-btn" class="header-action-btn" title="Notifications">
+                            <i data-lucide="bell" class="w-4 h-4"></i>
+                            <span id="notif-badge" class="notification-count-badge">3</span>
+                        </button>
+
+                        <!-- Notification Dropdown Panel -->
+                        <div id="notif-dropdown" class="notification-dropdown">
+                            <div class="notif-header">
+                                <div class="font-bold text-sm text-primary flex items-center gap-2">
+                                    <i data-lucide="bell-ring" class="w-4 h-4 text-blue-400"></i>
+                                    <span>Real-Time CV Alerts</span>
+                                </div>
+                                <span class="text-xs text-muted">3 Unresolved</span>
+                            </div>
+                            <div class="notif-list" id="notif-list-container">
+                                <!-- Populated dynamically -->
+                            </div>
+                            <div class="p-2 border-t border-subtle bg-surface-1 text-center">
+                                <a href="#/alerts" class="text-xs text-blue-400 font-semibold hover:underline">View All Alerts in Incident Hub &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Refresh Button -->
+                    <button id="refresh-page-btn" class="header-action-btn" title="Refresh Live Data">
+                        <i data-lucide="rotate-cw" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Main Page View Container -->
+            <main id="app" class="page-container"></main>
+        </div>
+    </div>
+
+    <!-- Global Toast Container -->
+    <div id="toast-container"></div>
+
+    <!-- Global Action / Confirmation Modal -->
+    <div id="global-modal" class="modal-backdrop">
+        <div class="modal-card">
+            <div class="p-5 border-b border-subtle flex items-center justify-between">
+                <div id="modal-title" class="font-bold text-base text-primary">Confirm Action</div>
+                <button id="modal-close-btn" class="text-secondary hover:text-primary">
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
+            </div>
+            <div id="modal-body" class="p-5 text-sm text-secondary"></div>
+            <div id="modal-footer" class="p-4 border-t border-subtle bg-surface-1 flex justify-end gap-3"></div>
+        </div>
+    </div>
+
+    <!-- ═══════════════ JAVASCRIPT MODULES ═══════════════ -->
+    <script src="js/api.js"></script>
+    <script src="js/components/kpiCard.js"></script>
+    <script src="js/components/alertCard.js"></script>
+    <script src="js/components/charts.js"></script>
+    <script src="js/components/tables.js"></script>
+    <script src="js/pages/dashboard.js"></script>
+    <script src="js/pages/liveMonitor.js"></script>
+    <script src="js/pages/shelfAnalysis.js"></script>
+    <script src="js/pages/shelfOptimizer.js"></script>
+    <script src="js/pages/forecast.js"></script>
+    <script src="js/pages/alerts.js"></script>
+    <script src="js/pages/smartStore.js"></script>
+    <script src="js/pages/settings.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

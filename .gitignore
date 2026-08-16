@@ -1,0 +1,39 @@
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtual environments
+venv/
+env/
+gpu_env/
+.venv/
+
+# Model weights (large files)
+*.pt
+*.pth
+*.onnx
+runs/
+weights/
+
+# Database files
+*.db
+*.db-shm
+*.db-wal
+
+# Datasets / generated data
+datasets/
+backend/core/data/pos_data/*.csv
+backend/core/data/sample_images/*.jpg
+backend/core/data/sample_images/*.png
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/

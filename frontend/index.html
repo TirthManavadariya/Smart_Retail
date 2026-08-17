@@ -18,8 +18,26 @@
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: ['class', '[data-theme="dark"]'],
+            theme: {
+                extend: {
+                    colors: {
+                        'surface-0': '#0d1527',
+                        'surface-1': '#131f38',
+                        'surface-2': '#1c2b4c',
+                        'surface-3': '#24365d',
+                    }
+                }
+            }
+        }
+    </script>
+
     <!-- Custom CSS Design System -->
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/styles.css?v=2.5">
 </head>
 <body>
     <div id="app-layout">
@@ -153,19 +171,19 @@
     </div>
 
     <!-- ═══════════════ JAVASCRIPT MODULES ═══════════════ -->
-    <script src="js/api.js"></script>
-    <script src="js/components/kpiCard.js"></script>
-    <script src="js/components/alertCard.js"></script>
-    <script src="js/components/charts.js"></script>
-    <script src="js/components/tables.js"></script>
-    <script src="js/pages/dashboard.js"></script>
-    <script src="js/pages/liveMonitor.js"></script>
-    <script src="js/pages/shelfAnalysis.js"></script>
-    <script src="js/pages/shelfOptimizer.js"></script>
-    <script src="js/pages/forecast.js"></script>
-    <script src="js/pages/alerts.js"></script>
-    <script src="js/pages/smartStore.js"></script>
-    <script src="js/pages/settings.js"></script>
-    <script src="js/app.js"></script>
+    <script src="js/api.js?v=2.5"></script>
+    <script src="js/components/kpiCard.js?v=2.5"></script>
+    <script src="js/components/alertCard.js?v=2.5"></script>
+    <script src="js/components/charts.js?v=2.5"></script>
+    <script src="js/components/tables.js?v=2.5"></script>
+    <script src="js/pages/dashboard.js?v=2.5"></script>
+    <script src="js/pages/liveMonitor.js?v=2.5"></script>
+    <script src="js/pages/shelfAnalysis.js?v=2.5"></script>
+    <script src="js/pages/shelfOptimizer.js?v=2.5"></script>
+    <script src="js/pages/forecast.js?v=2.5"></script>
+    <script src="js/pages/alerts.js?v=2.5"></script>
+    <script src="js/pages/smartStore.js?v=2.5"></script>
+    <script src="js/pages/settings.js?v=2.5"></script>
+    <script src="js/app.js?v=2.5"></script>
 </body>
 </html>

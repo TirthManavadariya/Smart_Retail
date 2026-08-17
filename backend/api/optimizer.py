@@ -10,7 +10,7 @@ import json, io
 
 optimizer_bp = Blueprint("optimizer", __name__)
 
-from config.settings import (STORE_CONFIG, OPTIMIZER_OUTPUT_DIR, EYE_LEVEL_SHELVES,
+from config.settings import (STORE_CONFIG, OPTIMIZER_OUTPUT_DIR, PLANOGRAM_DIR, EYE_LEVEL_SHELVES,
                               SHELF_VISIBILITY_MULTIPLIER, DATABASE_PATH, POS_DATA_DIR)
 
 
@@ -138,6 +138,10 @@ def _load_planogram(store_id):
     path = OPTIMIZER_OUTPUT_DIR / f"optimized_planogram_{store_id.lower()}.json"
     if path.exists():
         with open(path) as f:
+            return json.load(f)
+    sample_path = PLANOGRAM_DIR / f"planogram_{store_id.lower()}.json"
+    if sample_path.exists():
+        with open(sample_path) as f:
             return json.load(f)
     return None
 

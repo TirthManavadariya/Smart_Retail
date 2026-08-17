@@ -24,201 +24,286 @@ const ShelfAnalysisPage = {
                 <!-- Side-by-Side Comparison Container -->
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
                     <!-- Expected Planogram Blueprint -->
-                    <div class="glass-panel border-blue-500/30 shadow-lg">
-                        <div class="panel-header bg-surface-1/90">
+                    <div class="blueprint-card-panel">
+                        <!-- Blueprint Header Area -->
+                        <div class="panel-header bg-surface-1/90 flex items-center justify-between">
                             <div class="flex items-center gap-3">
-                                <div class="w-9 h-9 rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-400 flex items-center justify-center">
+                                <div class="w-10 h-10 rounded-xl bg-blue-500/15 border border-blue-500/30 text-blue-400 flex items-center justify-center shadow-inner">
                                     <i data-lucide="layout-template" class="w-5 h-5"></i>
                                 </div>
                                 <div>
-                                    <div class="panel-title text-sm">Target Planogram Blueprint</div>
-                                    <div class="panel-subtitle text-xs">Official Merchandising Spec (V3.1 • Bay 3)</div>
+                                    <div class="panel-title text-sm font-extrabold text-slate-100 flex items-center gap-2">
+                                        Target Planogram Blueprint
+                                    </div>
+                                    <div class="mt-1 flex items-center gap-2">
+                                        <span class="blueprint-header-chip">
+                                            <i data-lucide="file-check-2" class="w-3 h-3 text-blue-400"></i>
+                                            Official Merchandising Spec (V3.1 • Bay 3)
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
-                            <span class="badge badge-info text-[0.65rem] px-2.5 py-0.5">Reference Standard</span>
+                            <span class="badge badge-info text-[0.65rem] px-2.5 py-1 flex items-center gap-1.5 shadow-sm">
+                                <span class="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse"></span> Reference Standard
+                            </span>
                         </div>
-                        <div class="panel-body p-4 space-y-4">
-                            <!-- Shelf Tier 1 Blueprint -->
-                            <div class="bg-surface-0/90 border border-subtle rounded-xl p-4 shadow-sm relative overflow-hidden">
-                                <div class="flex items-center justify-between mb-3 pb-2 border-b border-subtle">
+
+                        <div class="panel-body p-4 space-y-5">
+                            <!-- ═══════════════ SHELF LEVEL 1 ═══════════════ -->
+                            <div class="blueprint-shelf-container">
+                                <!-- Shelf 1 Header -->
+                                <div class="blueprint-shelf-header">
                                     <div class="flex items-center gap-2">
-                                        <span class="px-2 py-0.5 rounded bg-blue-500/15 border border-blue-500/30 text-blue-400 font-mono text-[0.68rem] font-bold uppercase">
+                                        <span class="blueprint-shelf-tag">
+                                            <i data-lucide="layers" class="w-3.5 h-3.5"></i>
                                             Shelf 1: Eye-Level High Velocity
                                         </span>
                                     </div>
-                                    <span class="text-[0.68rem] text-muted font-medium">14 / 14 Facings Allocated</span>
+                                    <span class="blueprint-alloc-badge">
+                                        <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i>
+                                        14/14 Facings Allocated
+                                    </span>
                                 </div>
 
+                                <!-- Facing Distribution Track / Progress Track -->
+                                <div class="blueprint-distribution-track">
+                                    <div class="flex items-center justify-between text-[0.68rem] text-slate-400 font-semibold mb-1.5">
+                                        <span class="flex items-center gap-1.5 text-slate-300">
+                                            <i data-lucide="sliders-horizontal" class="w-3 h-3 text-sky-400"></i> Facing Distribution
+                                        </span>
+                                        <span class="font-mono text-slate-400">100% Shelf Capacity (14 Facings)</span>
+                                    </div>
+                                    <!-- Segmented Bar -->
+                                    <div class="blueprint-segmented-bar" title="Shelf 1 Facings Distribution">
+                                        <div class="blueprint-seg-item" style="width: 42.86%; background: linear-gradient(90deg, #0284c7, #38bdf8);" title="Coca-Cola (6 Facings • 42.9%)"></div>
+                                        <div class="blueprint-seg-item" style="width: 28.57%; background: linear-gradient(90deg, #059669, #34d399);" title="Sprite Zero (4 Facings • 28.6%)"></div>
+                                        <div class="blueprint-seg-item" style="width: 28.57%; background: linear-gradient(90deg, #d97706, #f59e0b);" title="Red Bull (4 Facings • 28.6%)"></div>
+                                    </div>
+                                    <!-- Legend Pills -->
+                                    <div class="blueprint-track-legend">
+                                        <div class="blueprint-legend-item">
+                                            <span class="blueprint-legend-dot" style="background: #38bdf8;"></span>
+                                            <span>Coca-Cola (6)</span>
+                                        </div>
+                                        <div class="blueprint-legend-item">
+                                            <span class="blueprint-legend-dot" style="background: #34d399;"></span>
+                                            <span>Sprite Zero (4)</span>
+                                        </div>
+                                        <div class="blueprint-legend-item">
+                                            <span class="blueprint-legend-dot" style="background: #f59e0b;"></span>
+                                            <span>Red Bull (4)</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Product Item Cards Grid -->
                                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                                     <!-- SKU 1: Coca-Cola -->
-                                    <div class="p-3 rounded-xl bg-surface-1 border border-subtle hover:border-blue-400/40 transition-all flex flex-col justify-between">
+                                    <div class="blueprint-product-card">
                                         <div>
-                                            <div class="flex items-center justify-between mb-2">
-                                                <div class="w-8 h-8 rounded-lg bg-red-500/15 border border-red-500/30 text-red-400 flex items-center justify-center text-base shadow-sm">
+                                            <div class="flex items-center justify-between mb-2.5">
+                                                <div class="blueprint-icon-box bg-red-500/15 border border-red-500/30 text-red-400">
                                                     🥤
                                                 </div>
-                                                <span class="font-mono text-[0.65rem] bg-surface-2 px-1.5 py-0.5 rounded text-muted font-semibold">SKU-14829</span>
+                                                <span class="blueprint-sku-tag">SKU-14829</span>
                                             </div>
-                                            <div class="font-bold text-xs text-primary leading-tight">Coca-Cola 500ml</div>
-                                            <div class="text-[0.68rem] text-emerald-400 font-semibold mt-0.5">₹40.00 / unit</div>
+                                            <div class="blueprint-product-title">Coca-Cola 500ml</div>
+                                            <div class="blueprint-price-tag mt-1">₹40.00 / unit</div>
                                         </div>
-                                        <div class="mt-3 pt-2 border-t border-subtle">
-                                            <div class="flex items-center justify-between text-[0.65rem] text-muted mb-1">
-                                                <span>Facing Allocation:</span>
-                                                <span class="font-bold text-primary font-mono">6 Facings</span>
+                                        <div class="pt-2.5 border-t border-slate-700/60">
+                                            <div class="flex items-center justify-between text-[0.68rem] text-slate-400 mb-1">
+                                                <span class="font-medium">Facing Allocation:</span>
+                                                <span class="blueprint-facings-pill">6 Facings</span>
                                             </div>
-                                            <div class="flex gap-0.5 h-1.5 w-full">
-                                                <div class="flex-1 bg-blue-400 rounded-sm"></div>
-                                                <div class="flex-1 bg-blue-400 rounded-sm"></div>
-                                                <div class="flex-1 bg-blue-400 rounded-sm"></div>
-                                                <div class="flex-1 bg-blue-400 rounded-sm"></div>
-                                                <div class="flex-1 bg-blue-400 rounded-sm"></div>
-                                                <div class="flex-1 bg-blue-400 rounded-sm"></div>
+                                            <div class="blueprint-mini-bar" title="6 Facings">
+                                                <div class="blueprint-mini-segment" style="background: #38bdf8;"></div>
+                                                <div class="blueprint-mini-segment" style="background: #38bdf8;"></div>
+                                                <div class="blueprint-mini-segment" style="background: #38bdf8;"></div>
+                                                <div class="blueprint-mini-segment" style="background: #38bdf8;"></div>
+                                                <div class="blueprint-mini-segment" style="background: #38bdf8;"></div>
+                                                <div class="blueprint-mini-segment" style="background: #38bdf8;"></div>
                                             </div>
                                         </div>
                                     </div>
 
                                     <!-- SKU 2: Sprite Zero -->
-                                    <div class="p-3 rounded-xl bg-surface-1 border border-subtle hover:border-blue-400/40 transition-all flex flex-col justify-between">
+                                    <div class="blueprint-product-card">
                                         <div>
-                                            <div class="flex items-center justify-between mb-2">
-                                                <div class="w-8 h-8 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 flex items-center justify-center text-base shadow-sm">
+                                            <div class="flex items-center justify-between mb-2.5">
+                                                <div class="blueprint-icon-box bg-emerald-500/15 border border-emerald-500/30 text-emerald-400">
                                                     🍋
                                                 </div>
-                                                <span class="font-mono text-[0.65rem] bg-surface-2 px-1.5 py-0.5 rounded text-muted font-semibold">SKU-09412</span>
+                                                <span class="blueprint-sku-tag">SKU-09412</span>
                                             </div>
-                                            <div class="font-bold text-xs text-primary leading-tight">Sprite Zero 500ml</div>
-                                            <div class="text-[0.68rem] text-emerald-400 font-semibold mt-0.5">₹40.00 / unit</div>
+                                            <div class="blueprint-product-title">Sprite Zero 500ml</div>
+                                            <div class="blueprint-price-tag mt-1">₹40.00 / unit</div>
                                         </div>
-                                        <div class="mt-3 pt-2 border-t border-subtle">
-                                            <div class="flex items-center justify-between text-[0.65rem] text-muted mb-1">
-                                                <span>Facing Allocation:</span>
-                                                <span class="font-bold text-primary font-mono">4 Facings</span>
+                                        <div class="pt-2.5 border-t border-slate-700/60">
+                                            <div class="flex items-center justify-between text-[0.68rem] text-slate-400 mb-1">
+                                                <span class="font-medium">Facing Allocation:</span>
+                                                <span class="blueprint-facings-pill" style="color: #34d399; background: rgba(52, 211, 153, 0.12); border-color: rgba(52, 211, 153, 0.25);">4 Facings</span>
                                             </div>
-                                            <div class="flex gap-0.5 h-1.5 w-full">
-                                                <div class="flex-1 bg-blue-400 rounded-sm"></div>
-                                                <div class="flex-1 bg-blue-400 rounded-sm"></div>
-                                                <div class="flex-1 bg-blue-400 rounded-sm"></div>
-                                                <div class="flex-1 bg-blue-400 rounded-sm"></div>
+                                            <div class="blueprint-mini-bar" title="4 Facings">
+                                                <div class="blueprint-mini-segment" style="background: #34d399; box-shadow: 0 0 4px rgba(52, 211, 153, 0.4);"></div>
+                                                <div class="blueprint-mini-segment" style="background: #34d399; box-shadow: 0 0 4px rgba(52, 211, 153, 0.4);"></div>
+                                                <div class="blueprint-mini-segment" style="background: #34d399; box-shadow: 0 0 4px rgba(52, 211, 153, 0.4);"></div>
+                                                <div class="blueprint-mini-segment" style="background: #34d399; box-shadow: 0 0 4px rgba(52, 211, 153, 0.4);"></div>
                                             </div>
                                         </div>
                                     </div>
 
                                     <!-- SKU 3: Red Bull -->
-                                    <div class="p-3 rounded-xl bg-surface-1 border border-subtle hover:border-blue-400/40 transition-all flex flex-col justify-between">
+                                    <div class="blueprint-product-card">
                                         <div>
-                                            <div class="flex items-center justify-between mb-2">
-                                                <div class="w-8 h-8 rounded-lg bg-indigo-500/15 border border-indigo-500/30 text-indigo-400 flex items-center justify-center text-base shadow-sm">
+                                            <div class="flex items-center justify-between mb-2.5">
+                                                <div class="blueprint-icon-box bg-amber-500/15 border border-amber-500/30 text-amber-400">
                                                     ⚡
                                                 </div>
-                                                <span class="font-mono text-[0.65rem] bg-surface-2 px-1.5 py-0.5 rounded text-muted font-semibold">SKU-10824</span>
+                                                <span class="blueprint-sku-tag">SKU-10824</span>
                                             </div>
-                                            <div class="font-bold text-xs text-primary leading-tight">Red Bull 250ml</div>
-                                            <div class="text-[0.68rem] text-emerald-400 font-semibold mt-0.5">₹125.00 / unit</div>
+                                            <div class="blueprint-product-title">Red Bull 250ml</div>
+                                            <div class="blueprint-price-tag mt-1">₹125.00 / unit</div>
                                         </div>
-                                        <div class="mt-3 pt-2 border-t border-subtle">
-                                            <div class="flex items-center justify-between text-[0.65rem] text-muted mb-1">
-                                                <span>Facing Allocation:</span>
-                                                <span class="font-bold text-primary font-mono">4 Facings</span>
+                                        <div class="pt-2.5 border-t border-slate-700/60">
+                                            <div class="flex items-center justify-between text-[0.68rem] text-slate-400 mb-1">
+                                                <span class="font-medium">Facing Allocation:</span>
+                                                <span class="blueprint-facings-pill" style="color: #f59e0b; background: rgba(245, 158, 11, 0.12); border-color: rgba(245, 158, 11, 0.25);">4 Facings</span>
                                             </div>
-                                            <div class="flex gap-0.5 h-1.5 w-full">
-                                                <div class="flex-1 bg-blue-400 rounded-sm"></div>
-                                                <div class="flex-1 bg-blue-400 rounded-sm"></div>
-                                                <div class="flex-1 bg-blue-400 rounded-sm"></div>
-                                                <div class="flex-1 bg-blue-400 rounded-sm"></div>
+                                            <div class="blueprint-mini-bar" title="4 Facings">
+                                                <div class="blueprint-mini-segment" style="background: #f59e0b; box-shadow: 0 0 4px rgba(245, 158, 11, 0.4);"></div>
+                                                <div class="blueprint-mini-segment" style="background: #f59e0b; box-shadow: 0 0 4px rgba(245, 158, 11, 0.4);"></div>
+                                                <div class="blueprint-mini-segment" style="background: #f59e0b; box-shadow: 0 0 4px rgba(245, 158, 11, 0.4);"></div>
+                                                <div class="blueprint-mini-segment" style="background: #f59e0b; box-shadow: 0 0 4px rgba(245, 158, 11, 0.4);"></div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Shelf Tier 2 Blueprint -->
-                            <div class="bg-surface-0/90 border border-subtle rounded-xl p-4 shadow-sm relative overflow-hidden">
-                                <div class="flex items-center justify-between mb-3 pb-2 border-b border-subtle">
+                            <!-- ═══════════════ SHELF LEVEL 2 ═══════════════ -->
+                            <div class="blueprint-shelf-container">
+                                <!-- Shelf 2 Header -->
+                                <div class="blueprint-shelf-header">
                                     <div class="flex items-center gap-2">
-                                        <span class="px-2 py-0.5 rounded bg-slate-700/40 border border-slate-600/40 text-slate-300 font-mono text-[0.68rem] font-bold uppercase">
+                                        <span class="blueprint-shelf-tag tier2">
+                                            <i data-lucide="layers" class="w-3.5 h-3.5 text-slate-400"></i>
                                             Shelf 2: Standard Capacity Hydration
                                         </span>
                                     </div>
-                                    <span class="text-[0.68rem] text-muted font-medium">13 / 13 Facings Allocated</span>
+                                    <span class="blueprint-alloc-badge">
+                                        <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i>
+                                        13/13 Facings Allocated
+                                    </span>
                                 </div>
 
+                                <!-- Facing Distribution Track / Progress Track -->
+                                <div class="blueprint-distribution-track">
+                                    <div class="flex items-center justify-between text-[0.68rem] text-slate-400 font-semibold mb-1.5">
+                                        <span class="flex items-center gap-1.5 text-slate-300">
+                                            <i data-lucide="sliders-horizontal" class="w-3 h-3 text-teal-400"></i> Facing Distribution
+                                        </span>
+                                        <span class="font-mono text-slate-400">100% Shelf Capacity (13 Facings)</span>
+                                    </div>
+                                    <!-- Segmented Bar -->
+                                    <div class="blueprint-segmented-bar" title="Shelf 2 Facings Distribution">
+                                        <div class="blueprint-seg-item" style="width: 38.46%; background: linear-gradient(90deg, #0d9488, #2dd4bf);" title="Perrier (5 Facings • 38.5%)"></div>
+                                        <div class="blueprint-seg-item" style="width: 30.77%; background: linear-gradient(90deg, #9333ea, #c084fc);" title="Sparkling Berry (4 Facings • 30.8%)"></div>
+                                        <div class="blueprint-seg-item" style="width: 30.77%; background: linear-gradient(90deg, #0284c7, #38bdf8);" title="SmartWater (4 Facings • 30.8%)"></div>
+                                    </div>
+                                    <!-- Legend Pills -->
+                                    <div class="blueprint-track-legend">
+                                        <div class="blueprint-legend-item">
+                                            <span class="blueprint-legend-dot" style="background: #2dd4bf;"></span>
+                                            <span>Perrier (5)</span>
+                                        </div>
+                                        <div class="blueprint-legend-item">
+                                            <span class="blueprint-legend-dot" style="background: #c084fc;"></span>
+                                            <span>Sparkling Berry (4)</span>
+                                        </div>
+                                        <div class="blueprint-legend-item">
+                                            <span class="blueprint-legend-dot" style="background: #38bdf8;"></span>
+                                            <span>SmartWater (4)</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Product Item Cards Grid -->
                                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                                     <!-- SKU 4: Perrier -->
-                                    <div class="p-3 rounded-xl bg-surface-1 border border-subtle hover:border-blue-400/40 transition-all flex flex-col justify-between">
+                                    <div class="blueprint-product-card">
                                         <div>
-                                            <div class="flex items-center justify-between mb-2">
-                                                <div class="w-8 h-8 rounded-lg bg-teal-500/15 border border-teal-500/30 text-teal-400 flex items-center justify-center text-base shadow-sm">
+                                            <div class="flex items-center justify-between mb-2.5">
+                                                <div class="blueprint-icon-box bg-teal-500/15 border border-teal-500/30 text-teal-400">
                                                     🍾
                                                 </div>
-                                                <span class="font-mono text-[0.65rem] bg-surface-2 px-1.5 py-0.5 rounded text-muted font-semibold">SKU-55219</span>
+                                                <span class="blueprint-sku-tag">SKU-55219</span>
                                             </div>
-                                            <div class="font-bold text-xs text-primary leading-tight">Perrier 750ml</div>
-                                            <div class="text-[0.68rem] text-emerald-400 font-semibold mt-0.5">₹99.00 / unit</div>
+                                            <div class="blueprint-product-title">Perrier 750ml</div>
+                                            <div class="blueprint-price-tag mt-1">₹99.00 / unit</div>
                                         </div>
-                                        <div class="mt-3 pt-2 border-t border-subtle">
-                                            <div class="flex items-center justify-between text-[0.65rem] text-muted mb-1">
-                                                <span>Facing Allocation:</span>
-                                                <span class="font-bold text-primary font-mono">5 Facings</span>
+                                        <div class="pt-2.5 border-t border-slate-700/60">
+                                            <div class="flex items-center justify-between text-[0.68rem] text-slate-400 mb-1">
+                                                <span class="font-medium">Facing Allocation:</span>
+                                                <span class="blueprint-facings-pill" style="color: #2dd4bf; background: rgba(45, 212, 191, 0.12); border-color: rgba(45, 212, 191, 0.25);">5 Facings</span>
                                             </div>
-                                            <div class="flex gap-0.5 h-1.5 w-full">
-                                                <div class="flex-1 bg-blue-400 rounded-sm"></div>
-                                                <div class="flex-1 bg-blue-400 rounded-sm"></div>
-                                                <div class="flex-1 bg-blue-400 rounded-sm"></div>
-                                                <div class="flex-1 bg-blue-400 rounded-sm"></div>
-                                                <div class="flex-1 bg-blue-400 rounded-sm"></div>
+                                            <div class="blueprint-mini-bar" title="5 Facings">
+                                                <div class="blueprint-mini-segment" style="background: #2dd4bf; box-shadow: 0 0 4px rgba(45, 212, 191, 0.4);"></div>
+                                                <div class="blueprint-mini-segment" style="background: #2dd4bf; box-shadow: 0 0 4px rgba(45, 212, 191, 0.4);"></div>
+                                                <div class="blueprint-mini-segment" style="background: #2dd4bf; box-shadow: 0 0 4px rgba(45, 212, 191, 0.4);"></div>
+                                                <div class="blueprint-mini-segment" style="background: #2dd4bf; box-shadow: 0 0 4px rgba(45, 212, 191, 0.4);"></div>
+                                                <div class="blueprint-mini-segment" style="background: #2dd4bf; box-shadow: 0 0 4px rgba(45, 212, 191, 0.4);"></div>
                                             </div>
                                         </div>
                                     </div>
 
                                     <!-- SKU 5: Sparkling Berry -->
-                                    <div class="p-3 rounded-xl bg-surface-1 border border-subtle hover:border-blue-400/40 transition-all flex flex-col justify-between">
+                                    <div class="blueprint-product-card">
                                         <div>
-                                            <div class="flex items-center justify-between mb-2">
-                                                <div class="w-8 h-8 rounded-lg bg-purple-500/15 border border-purple-500/30 text-purple-400 flex items-center justify-center text-base shadow-sm">
+                                            <div class="flex items-center justify-between mb-2.5">
+                                                <div class="blueprint-icon-box bg-purple-500/15 border border-purple-500/30 text-purple-400">
                                                     🫐
                                                 </div>
-                                                <span class="font-mono text-[0.65rem] bg-surface-2 px-1.5 py-0.5 rounded text-muted font-semibold">SKU-61033</span>
+                                                <span class="blueprint-sku-tag">SKU-61033</span>
                                             </div>
-                                            <div class="font-bold text-xs text-primary leading-tight">Sparkling Berry</div>
-                                            <div class="text-[0.68rem] text-emerald-400 font-semibold mt-0.5">₹85.00 / unit</div>
+                                            <div class="blueprint-product-title">Sparkling Berry</div>
+                                            <div class="blueprint-price-tag mt-1">₹85.00 / unit</div>
                                         </div>
-                                        <div class="mt-3 pt-2 border-t border-subtle">
-                                            <div class="flex items-center justify-between text-[0.65rem] text-muted mb-1">
-                                                <span>Facing Allocation:</span>
-                                                <span class="font-bold text-primary font-mono">4 Facings</span>
+                                        <div class="pt-2.5 border-t border-slate-700/60">
+                                            <div class="flex items-center justify-between text-[0.68rem] text-slate-400 mb-1">
+                                                <span class="font-medium">Facing Allocation:</span>
+                                                <span class="blueprint-facings-pill" style="color: #c084fc; background: rgba(192, 132, 252, 0.12); border-color: rgba(192, 132, 252, 0.25);">4 Facings</span>
                                             </div>
-                                            <div class="flex gap-0.5 h-1.5 w-full">
-                                                <div class="flex-1 bg-blue-400 rounded-sm"></div>
-                                                <div class="flex-1 bg-blue-400 rounded-sm"></div>
-                                                <div class="flex-1 bg-blue-400 rounded-sm"></div>
-                                                <div class="flex-1 bg-blue-400 rounded-sm"></div>
+                                            <div class="blueprint-mini-bar" title="4 Facings">
+                                                <div class="blueprint-mini-segment" style="background: #c084fc; box-shadow: 0 0 4px rgba(192, 132, 252, 0.4);"></div>
+                                                <div class="blueprint-mini-segment" style="background: #c084fc; box-shadow: 0 0 4px rgba(192, 132, 252, 0.4);"></div>
+                                                <div class="blueprint-mini-segment" style="background: #c084fc; box-shadow: 0 0 4px rgba(192, 132, 252, 0.4);"></div>
+                                                <div class="blueprint-mini-segment" style="background: #c084fc; box-shadow: 0 0 4px rgba(192, 132, 252, 0.4);"></div>
                                             </div>
                                         </div>
                                     </div>
 
                                     <!-- SKU 6: SmartWater -->
-                                    <div class="p-3 rounded-xl bg-surface-1 border border-subtle hover:border-blue-400/40 transition-all flex flex-col justify-between">
+                                    <div class="blueprint-product-card">
                                         <div>
-                                            <div class="flex items-center justify-between mb-2">
-                                                <div class="w-8 h-8 rounded-lg bg-cyan-500/15 border border-cyan-500/30 text-cyan-400 flex items-center justify-center text-base shadow-sm">
+                                            <div class="flex items-center justify-between mb-2.5">
+                                                <div class="blueprint-icon-box bg-cyan-500/15 border border-cyan-500/30 text-cyan-400">
                                                     💧
                                                 </div>
-                                                <span class="font-mono text-[0.65rem] bg-surface-2 px-1.5 py-0.5 rounded text-muted font-semibold">SKU-77210</span>
+                                                <span class="blueprint-sku-tag">SKU-77210</span>
                                             </div>
-                                            <div class="font-bold text-xs text-primary leading-tight">SmartWater 1L</div>
-                                            <div class="text-[0.68rem] text-emerald-400 font-semibold mt-0.5">₹60.00 / unit</div>
+                                            <div class="blueprint-product-title">SmartWater 1L</div>
+                                            <div class="blueprint-price-tag mt-1">₹60.00 / unit</div>
                                         </div>
-                                        <div class="mt-3 pt-2 border-t border-subtle">
-                                            <div class="flex items-center justify-between text-[0.65rem] text-muted mb-1">
-                                                <span>Facing Allocation:</span>
-                                                <span class="font-bold text-primary font-mono">4 Facings</span>
+                                        <div class="pt-2.5 border-t border-slate-700/60">
+                                            <div class="flex items-center justify-between text-[0.68rem] text-slate-400 mb-1">
+                                                <span class="font-medium">Facing Allocation:</span>
+                                                <span class="blueprint-facings-pill">4 Facings</span>
                                             </div>
-                                            <div class="flex gap-0.5 h-1.5 w-full">
-                                                <div class="flex-1 bg-blue-400 rounded-sm"></div>
-                                                <div class="flex-1 bg-blue-400 rounded-sm"></div>
-                                                <div class="flex-1 bg-blue-400 rounded-sm"></div>
-                                                <div class="flex-1 bg-blue-400 rounded-sm"></div>
+                                            <div class="blueprint-mini-bar" title="4 Facings">
+                                                <div class="blueprint-mini-segment" style="background: #38bdf8;"></div>
+                                                <div class="blueprint-mini-segment" style="background: #38bdf8;"></div>
+                                                <div class="blueprint-mini-segment" style="background: #38bdf8;"></div>
+                                                <div class="blueprint-mini-segment" style="background: #38bdf8;"></div>
                                             </div>
                                         </div>
                                     </div>

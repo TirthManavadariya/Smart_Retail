@@ -84,10 +84,10 @@ function _renderStreamTab(tabContent, detail) {
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <!-- Simulated AI Video Stream Container -->
             <div class="lg:col-span-2 space-y-4">
-                <div class="glass-panel p-0 overflow-hidden">
+                <div class="stream-panel-card">
                     <div class="panel-header bg-surface-1">
                         <div class="flex items-center gap-3">
-                            <span class="flex items-center gap-2 text-xs font-bold text-rose-400 bg-rose-500/10 px-2.5 py-1 rounded-full border border-rose-500/20">
+                            <span class="flex items-center gap-2 text-xs font-bold text-rose-400 bg-rose-500/10 px-2.5 py-1 rounded-full border border-rose-500/20 shadow-sm">
                                 <span class="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></span> REC • LIVE
                             </span>
                             <span class="text-xs font-mono text-muted">RTSP://CAM-03-Aisle1-Bay3.local:554/stream1</span>
@@ -99,105 +99,102 @@ function _renderStreamTab(tabContent, detail) {
                     </div>
 
                     <!-- Video Viewport with AI Bounding Boxes -->
-                    <div class="relative bg-slate-950 flex items-center justify-center min-h-[380px] p-6 border-b border-subtle overflow-hidden">
+                    <div class="stream-viewport-box">
                         <!-- Simulated Shelf Backdrop -->
-                        <div class="w-full max-w-2xl bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 border border-slate-700/60 rounded-xl p-5 shadow-2xl relative">
-                            <!-- Shelf Rows -->
-                            <div class="space-y-6">
-                                <!-- Shelf Tier 1 -->
-                                <div class="bg-slate-950/80 rounded-xl p-3.5 border border-slate-700/60 flex items-center justify-between gap-3 relative shadow-inner">
-                                    <span class="absolute -top-2.5 left-3 text-[0.62rem] bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded border border-blue-500/30 uppercase font-mono font-bold">Tier 1: Eye-Level High Velocity</span>
-                                    
-                                    <!-- Detected SKU 1 -->
-                                    <div class="relative group cursor-pointer border-2 border-emerald-400/80 bg-emerald-500/10 rounded-xl p-2.5 flex-1 text-center hover:bg-emerald-500/20 transition-all">
-                                        <span class="absolute -top-3 left-1 bg-emerald-500 text-slate-950 text-[0.58rem] font-black px-1.5 py-0.5 rounded font-mono shadow-sm">Coca-Cola 500ml (98.4%)</span>
-                                        <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 mx-auto flex items-center justify-center text-sm font-bold my-1">🥤</div>
-                                        <div class="text-[0.68rem] font-bold text-emerald-400">6/6 Facings (100%)</div>
-                                        <div class="flex gap-0.5 h-1 w-full mt-1.5 max-w-[90px] mx-auto">
-                                            <div class="flex-1 bg-emerald-400 rounded-sm"></div>
-                                            <div class="flex-1 bg-emerald-400 rounded-sm"></div>
-                                            <div class="flex-1 bg-emerald-400 rounded-sm"></div>
-                                            <div class="flex-1 bg-emerald-400 rounded-sm"></div>
-                                            <div class="flex-1 bg-emerald-400 rounded-sm"></div>
-                                            <div class="flex-1 bg-emerald-400 rounded-sm"></div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Detected SKU 2 -->
-                                    <div class="relative group cursor-pointer border-2 border-emerald-400/80 bg-emerald-500/10 rounded-xl p-2.5 flex-1 text-center hover:bg-emerald-500/20 transition-all">
-                                        <span class="absolute -top-3 left-1 bg-emerald-500 text-slate-950 text-[0.58rem] font-black px-1.5 py-0.5 rounded font-mono shadow-sm">Sprite Zero 500ml (96.8%)</span>
-                                        <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 mx-auto flex items-center justify-center text-sm font-bold my-1">🍋</div>
-                                        <div class="text-[0.68rem] font-bold text-emerald-400">4/4 Facings (100%)</div>
-                                        <div class="flex gap-0.5 h-1 w-full mt-1.5 max-w-[90px] mx-auto">
-                                            <div class="flex-1 bg-emerald-400 rounded-sm"></div>
-                                            <div class="flex-1 bg-emerald-400 rounded-sm"></div>
-                                            <div class="flex-1 bg-emerald-400 rounded-sm"></div>
-                                            <div class="flex-1 bg-emerald-400 rounded-sm"></div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Stockout Alert Bounding Box -->
-                                    <div class="relative group cursor-pointer border-2 border-dashed border-rose-500 bg-rose-500/20 rounded-xl p-2.5 flex-1 text-center animate-pulse">
-                                        <span class="absolute -top-3 left-1 bg-rose-500 text-white text-[0.58rem] font-black px-1.5 py-0.5 rounded font-mono shadow-sm">STOCKOUT GAP (0/4)</span>
-                                        <div class="w-8 h-8 rounded-lg bg-rose-500/30 text-rose-400 mx-auto flex items-center justify-center text-sm font-bold my-1">⚠️</div>
-                                        <div class="text-[0.68rem] font-bold text-rose-400 leading-tight">Red Bull 250ml</div>
-                                        <div class="flex gap-0.5 h-1 w-full mt-1.5 max-w-[90px] mx-auto">
-                                            <div class="flex-1 bg-rose-500/40 rounded-sm border border-rose-500/60"></div>
-                                            <div class="flex-1 bg-rose-500/40 rounded-sm border border-rose-500/60"></div>
-                                            <div class="flex-1 bg-rose-500/40 rounded-sm border border-rose-500/60"></div>
-                                            <div class="flex-1 bg-rose-500/40 rounded-sm border border-rose-500/60"></div>
-                                        </div>
+                        <div class="stream-shelf-rack">
+                            <!-- Shelf Tier 1 -->
+                            <div class="stream-shelf-tier">
+                                <span class="stream-tier-badge tier1">Tier 1: Eye-Level High Velocity</span>
+                                
+                                <!-- Detected SKU 1 -->
+                                <div class="stream-detection-box optimal" title="Coca-Cola 500ml • 98.4% Confidence">
+                                    <span class="stream-box-tag bg-emerald-500 text-slate-950 font-bold">Coca-Cola 500ml (98.4%)</span>
+                                    <div class="w-9 h-9 rounded-lg bg-emerald-500/20 text-emerald-400 mx-auto flex items-center justify-center text-base font-bold my-1 shadow-sm">🥤</div>
+                                    <div class="text-[0.7rem] font-bold text-emerald-400">6/6 Facings (100%)</div>
+                                    <div class="flex gap-0.5 h-1.5 w-full mt-2 max-w-[100px] mx-auto">
+                                        <div class="flex-1 bg-emerald-400 rounded-sm"></div>
+                                        <div class="flex-1 bg-emerald-400 rounded-sm"></div>
+                                        <div class="flex-1 bg-emerald-400 rounded-sm"></div>
+                                        <div class="flex-1 bg-emerald-400 rounded-sm"></div>
+                                        <div class="flex-1 bg-emerald-400 rounded-sm"></div>
+                                        <div class="flex-1 bg-emerald-400 rounded-sm"></div>
                                     </div>
                                 </div>
 
-                                <!-- Shelf Tier 2 -->
-                                <div class="bg-slate-950/80 rounded-xl p-3.5 border border-slate-700/60 flex items-center justify-between gap-3 relative shadow-inner">
-                                    <span class="absolute -top-2.5 left-3 text-[0.62rem] bg-slate-700 text-slate-300 px-2 py-0.5 rounded uppercase font-mono font-bold">Tier 2: Standard Pack</span>
-                                    
-                                    <!-- Detected SKU 3 -->
-                                    <div class="relative group cursor-pointer border-2 border-emerald-400/80 bg-emerald-500/10 rounded-xl p-2.5 flex-1 text-center hover:bg-emerald-500/20 transition-all">
-                                        <span class="absolute -top-3 left-1 bg-emerald-500 text-slate-950 text-[0.58rem] font-black px-1.5 py-0.5 rounded font-mono shadow-sm">Perrier 750ml (94.2%)</span>
-                                        <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 mx-auto flex items-center justify-center text-sm font-bold my-1">🍾</div>
-                                        <div class="text-[0.68rem] font-bold text-emerald-400">5/5 Facings (100%)</div>
-                                        <div class="flex gap-0.5 h-1 w-full mt-1.5 max-w-[90px] mx-auto">
-                                            <div class="flex-1 bg-emerald-400 rounded-sm"></div>
-                                            <div class="flex-1 bg-emerald-400 rounded-sm"></div>
-                                            <div class="flex-1 bg-emerald-400 rounded-sm"></div>
-                                            <div class="flex-1 bg-emerald-400 rounded-sm"></div>
-                                            <div class="flex-1 bg-emerald-400 rounded-sm"></div>
-                                        </div>
+                                <!-- Detected SKU 2 -->
+                                <div class="stream-detection-box optimal" title="Sprite Zero 500ml • 96.8% Confidence">
+                                    <span class="stream-box-tag bg-emerald-500 text-slate-950 font-bold">Sprite Zero 500ml (96.8%)</span>
+                                    <div class="w-9 h-9 rounded-lg bg-emerald-500/20 text-emerald-400 mx-auto flex items-center justify-center text-base font-bold my-1 shadow-sm">🍋</div>
+                                    <div class="text-[0.7rem] font-bold text-emerald-400">4/4 Facings (100%)</div>
+                                    <div class="flex gap-0.5 h-1.5 w-full mt-2 max-w-[100px] mx-auto">
+                                        <div class="flex-1 bg-emerald-400 rounded-sm"></div>
+                                        <div class="flex-1 bg-emerald-400 rounded-sm"></div>
+                                        <div class="flex-1 bg-emerald-400 rounded-sm"></div>
+                                        <div class="flex-1 bg-emerald-400 rounded-sm"></div>
                                     </div>
+                                </div>
 
-                                    <!-- Planogram Misplacement Box -->
-                                    <div class="relative group cursor-pointer border-2 border-amber-400 bg-amber-500/15 rounded-xl p-2.5 flex-1 text-center hover:bg-amber-500/25 transition-all">
-                                        <span class="absolute -top-3 left-1 bg-amber-400 text-slate-950 text-[0.58rem] font-black px-1.5 py-0.5 rounded font-mono shadow-sm">MISPLACED FACING</span>
-                                        <div class="w-8 h-8 rounded-lg bg-amber-500/30 text-amber-400 mx-auto flex items-center justify-center text-sm font-bold my-1">🔄</div>
-                                        <div class="text-[0.68rem] font-bold text-amber-400 leading-tight">Sparkling Berry</div>
-                                        <div class="flex gap-0.5 h-1 w-full mt-1.5 max-w-[90px] mx-auto">
-                                            <div class="flex-1 bg-amber-400 rounded-sm"></div>
-                                            <div class="flex-1 bg-amber-400 rounded-sm"></div>
-                                            <div class="flex-1 bg-amber-400 rounded-sm"></div>
-                                            <div class="flex-1 bg-amber-400 rounded-sm"></div>
-                                        </div>
+                                <!-- Stockout Alert Bounding Box -->
+                                <div class="stream-detection-box stockout" title="STOCKOUT GAP • 0/4 Facings">
+                                    <span class="stream-box-tag bg-rose-500 text-white font-bold">STOCKOUT GAP (0/4)</span>
+                                    <div class="w-9 h-9 rounded-lg bg-rose-500/30 text-rose-400 mx-auto flex items-center justify-center text-base font-bold my-1 shadow-sm">⚠️</div>
+                                    <div class="text-[0.7rem] font-bold text-rose-400 leading-tight">Red Bull 250ml</div>
+                                    <div class="flex gap-0.5 h-1.5 w-full mt-2 max-w-[100px] mx-auto">
+                                        <div class="flex-1 bg-rose-500/40 rounded-sm border border-rose-500/60"></div>
+                                        <div class="flex-1 bg-rose-500/40 rounded-sm border border-rose-500/60"></div>
+                                        <div class="flex-1 bg-rose-500/40 rounded-sm border border-rose-500/60"></div>
+                                        <div class="flex-1 bg-rose-500/40 rounded-sm border border-rose-500/60"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Shelf Tier 2 -->
+                            <div class="stream-shelf-tier">
+                                <span class="stream-tier-badge tier2">Tier 2: Standard Pack</span>
+                                
+                                <!-- Detected SKU 3 -->
+                                <div class="stream-detection-box optimal" title="Perrier 750ml • 94.2% Confidence">
+                                    <span class="stream-box-tag bg-emerald-500 text-slate-950 font-bold">Perrier 750ml (94.2%)</span>
+                                    <div class="w-9 h-9 rounded-lg bg-emerald-500/20 text-emerald-400 mx-auto flex items-center justify-center text-base font-bold my-1 shadow-sm">🍾</div>
+                                    <div class="text-[0.7rem] font-bold text-emerald-400">5/5 Facings (100%)</div>
+                                    <div class="flex gap-0.5 h-1.5 w-full mt-2 max-w-[100px] mx-auto">
+                                        <div class="flex-1 bg-emerald-400 rounded-sm"></div>
+                                        <div class="flex-1 bg-emerald-400 rounded-sm"></div>
+                                        <div class="flex-1 bg-emerald-400 rounded-sm"></div>
+                                        <div class="flex-1 bg-emerald-400 rounded-sm"></div>
+                                        <div class="flex-1 bg-emerald-400 rounded-sm"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Planogram Misplacement Box -->
+                                <div class="stream-detection-box misplaced" title="MISPLACED FACING • Sparkling Berry">
+                                    <span class="stream-box-tag bg-amber-400 text-slate-950 font-bold">MISPLACED FACING</span>
+                                    <div class="w-9 h-9 rounded-lg bg-amber-500/30 text-amber-400 mx-auto flex items-center justify-center text-base font-bold my-1 shadow-sm">🔄</div>
+                                    <div class="text-[0.7rem] font-bold text-amber-400 leading-tight">Sparkling Berry</div>
+                                    <div class="flex gap-0.5 h-1.5 w-full mt-2 max-w-[100px] mx-auto">
+                                        <div class="flex-1 bg-amber-400 rounded-sm"></div>
+                                        <div class="flex-1 bg-amber-400 rounded-sm"></div>
+                                        <div class="flex-1 bg-amber-400 rounded-sm"></div>
+                                        <div class="flex-1 bg-amber-400 rounded-sm"></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Camera Control Bar Overlay -->
-                        <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between bg-slate-900/90 backdrop-blur-md px-4 py-2 rounded-lg border border-slate-700 text-xs">
+                        <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between bg-slate-900/90 backdrop-blur-md px-4 py-2.5 rounded-lg border border-slate-700 text-xs shadow-lg">
                             <div class="flex items-center gap-3">
                                 <span class="text-emerald-400 font-bold flex items-center gap-1.5">
                                     <i data-lucide="check-circle" class="w-3.5 h-3.5"></i> Inference Engine: OK
                                 </span>
-                                <span class="text-slate-400">|</span>
-                                <span class="text-slate-300">Model: <b>YOLOv8n-Retail-SKU110k</b></span>
+                                <span class="text-slate-500">|</span>
+                                <span class="text-slate-300">Model: <b class="font-mono text-sky-400">YOLOv8n-Retail-SKU110k</b></span>
                             </div>
                             <div class="flex items-center gap-2">
-                                <button class="btn-ghost py-1 px-2 text-[0.7rem]" onclick="App.showToast('Snapshot Saved', 'Camera frame captured for audit record.', 'info')">
+                                <button class="btn-ghost py-1 px-2.5 text-[0.7rem]" onclick="App.showToast('Snapshot Saved', 'Camera frame captured for audit record.', 'info')">
                                     <i data-lucide="camera" class="w-3.5 h-3.5"></i> Snapshot
                                 </button>
-                                <button class="btn-ghost py-1 px-2 text-[0.7rem]" onclick="App.showToast('Filter Applied', 'Toggled bounding box overlays.', 'info')">
+                                <button class="btn-ghost py-1 px-2.5 text-[0.7rem]" onclick="App.showToast('Filter Applied', 'Toggled bounding box overlays.', 'info')">
                                     <i data-lucide="eye" class="w-3.5 h-3.5"></i> Bounding Boxes: ON
                                 </button>
                             </div>
@@ -205,22 +202,22 @@ function _renderStreamTab(tabContent, detail) {
                     </div>
 
                     <!-- Telemetry Row Below Stream -->
-                    <div class="p-4 grid grid-cols-4 gap-4 bg-surface-0 text-center">
+                    <div class="stream-telemetry-grid">
                         <div>
-                            <div class="text-xs text-muted">Stock Level</div>
-                            <div class="text-lg font-black text-primary">${detail.stock_pct}%</div>
+                            <div class="text-xs text-muted font-medium">Stock Level</div>
+                            <div class="text-xl font-black text-primary mt-0.5">${detail.stock_pct}%</div>
                         </div>
                         <div>
-                            <div class="text-xs text-muted">Compliance</div>
-                            <div class="text-lg font-black text-emerald-400">${detail.compliance_pct}%</div>
+                            <div class="text-xs text-muted font-medium">Compliance</div>
+                            <div class="text-xl font-black text-emerald-400 mt-0.5">${detail.compliance_pct}%</div>
                         </div>
                         <div>
-                            <div class="text-xs text-muted">Active Violations</div>
-                            <div class="text-lg font-black text-rose-400">${detail.violations}</div>
+                            <div class="text-xs text-muted font-medium">Active Violations</div>
+                            <div class="text-xl font-black text-rose-400 mt-0.5">${detail.violations}</div>
                         </div>
                         <div>
-                            <div class="text-xs text-muted">1h Trend</div>
-                            <div class="text-lg font-black text-amber-400">-${detail.delta_pct}%</div>
+                            <div class="text-xs text-muted font-medium">1h Trend</div>
+                            <div class="text-xl font-black text-amber-400 mt-0.5">-${detail.delta_pct}%</div>
                         </div>
                     </div>
                 </div>

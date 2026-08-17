@@ -11,16 +11,17 @@ from pathlib import Path
 # .parent.parent = backend/core/
 # .parent.parent.parent = backend/    ← BACKEND_DIR (our root)
 BACKEND_DIR = Path(__file__).resolve().parent.parent.parent
+ROOT_DIR = BACKEND_DIR.parent
 
-# All data assets live under backend/core/
-CORE_DIR  = BACKEND_DIR / "core"
-DATA_DIR  = CORE_DIR / "data"
-MODELS_DIR = CORE_DIR / "models"
+# Resolve root vs core directories
+CORE_DIR = BACKEND_DIR / "core"
+DATA_DIR = (ROOT_DIR / "data") if (ROOT_DIR / "data").exists() else (CORE_DIR / "data")
+MODELS_DIR = (ROOT_DIR / "models") if (ROOT_DIR / "models").exists() else (CORE_DIR / "models")
 WEIGHTS_DIR = MODELS_DIR / "weights"
 SAMPLE_IMAGES_DIR = DATA_DIR / "sample_images"
-PLANOGRAM_DIR     = DATA_DIR / "sample_planograms"
-POS_DATA_DIR      = DATA_DIR / "pos_data"
-DB_DIR            = CORE_DIR / "database"
+PLANOGRAM_DIR = DATA_DIR / "sample_planograms"
+POS_DATA_DIR = DATA_DIR / "pos_data"
+DB_DIR = (ROOT_DIR / "database") if (ROOT_DIR / "database").exists() else (CORE_DIR / "database")
 
 # Create directories if they don't exist
 for d in [DATA_DIR, WEIGHTS_DIR, SAMPLE_IMAGES_DIR, PLANOGRAM_DIR, POS_DATA_DIR, DB_DIR]:

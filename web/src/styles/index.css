@@ -1,0 +1,226 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ═══════════════════════════════════════════════════════════════════════
+   ShelfIQ design tokens
+   Palette derives from the Material 3 scheme in stitch/ (cyan #6ee6ee on
+   #0b1323), which is also the palette declared in .streamlit/config.toml.
+   Values are space-separated RGB channels so Tailwind alpha modifiers work.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+@layer base {
+  :root,
+  [data-theme='dark'] {
+    color-scheme: dark;
+
+    --c-canvas: 8 14 30; /* #080e1e */
+    --c-surface: 11 19 35; /* #0b1323 */
+    --c-surface-lowest: 6 14 30; /* #060e1e */
+    --c-surface-low: 20 27 44; /* #141b2c */
+    --c-surface-mid: 24 32 48; /* #182030 */
+    --c-surface-high: 34 42 59; /* #222a3b */
+    --c-surface-highest: 45 53 70; /* #2d3546 */
+    --c-surface-bright: 49 57 75; /* #31394b */
+
+    --c-on-surface: 219 226 249; /* #dbe2f9 */
+    --c-on-surface-variant: 156 171 190; /* #9cabbe */
+    --c-on-surface-faint: 116 132 152; /* #748498 */
+
+    --c-outline: 134 147 148; /* #869394 */
+    --c-outline-variant: 61 73 74; /* #3d494a */
+
+    --c-primary: 110 230 238; /* #6ee6ee */
+    --c-primary-container: 78 202 210; /* #4ecad2 */
+    --c-on-primary: 0 55 58; /* #00373a */
+
+    --c-warn: 206 203 91; /* #cecb5b */
+    --c-on-warn: 51 50 0; /* #333200 */
+
+    --c-danger: 255 180 171; /* #ffb4ab */
+    --c-on-danger: 105 0 5; /* #690005 */
+
+    --c-success: 94 216 165; /* #5ed8a5 */
+    --c-on-success: 0 55 36;
+
+    --c-violet: 196 181 253; /* #c4b5fd */
+    --c-on-violet: 42 22 92;
+
+    /* Glass surfaces: translucent elevation + blur */
+    --glass-bg: 20 27 44;
+    --glass-alpha: 0.62;
+    --glass-border: 255 255 255;
+    --glass-border-alpha: 0.07;
+
+    --shadow-card: 0 1px 2px rgb(0 0 0 / 0.28), 0 8px 24px -8px rgb(0 0 0 / 0.5);
+    --shadow-pop: 0 18px 48px -12px rgb(0 0 0 / 0.7);
+
+    /* Ambient page wash */
+    --wash-a: rgb(110 230 238 / 0.05);
+    --wash-b: rgb(129 140 248 / 0.05);
+  }
+
+  [data-theme='light'] {
+    color-scheme: light;
+
+    --c-canvas: 242 246 251; /* #f2f6fb */
+    --c-surface: 255 255 255;
+    --c-surface-lowest: 255 255 255;
+    --c-surface-low: 246 249 253; /* #f6f9fd */
+    --c-surface-mid: 237 242 249; /* #edf2f9 */
+    --c-surface-high: 226 233 243; /* #e2e9f3 */
+    --c-surface-highest: 214 223 236; /* #d6dfec */
+    --c-surface-bright: 255 255 255;
+
+    --c-on-surface: 20 27 42; /* #141b2a */
+    --c-on-surface-variant: 71 85 105; /* #475569 */
+    --c-on-surface-faint: 110 124 145;
+
+    --c-outline: 113 120 126; /* #71787e */
+    --c-outline-variant: 199 209 222; /* #c7d1de */
+
+    --c-primary: 0 105 110; /* #00696e — M3 light primary (stitch inverse-primary) */
+    --c-primary-container: 0 82 86; /* #005256 */
+    --c-on-primary: 255 255 255;
+
+    --c-warn: 133 106 0; /* #856a00 */
+    --c-on-warn: 255 255 255;
+
+    --c-danger: 186 26 26; /* #ba1a1a */
+    --c-on-danger: 255 255 255;
+
+    --c-success: 0 122 90; /* #007a5a */
+    --c-on-success: 255 255 255;
+
+    --c-violet: 91 60 190; /* #5b3cbe */
+    --c-on-violet: 255 255 255;
+
+    --glass-bg: 255 255 255;
+    --glass-alpha: 0.72;
+    --glass-border: 15 23 42;
+    --glass-border-alpha: 0.08;
+
+    --shadow-card: 0 1px 2px rgb(15 23 42 / 0.05), 0 8px 24px -10px rgb(15 23 42 / 0.12);
+    --shadow-pop: 0 18px 48px -12px rgb(15 23 42 / 0.22);
+
+    --wash-a: rgb(0 105 110 / 0.05);
+    --wash-b: rgb(79 70 229 / 0.04);
+  }
+
+  * {
+    @apply border-line;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-canvas font-sans text-content antialiased;
+    min-height: 100vh;
+    /* Ambient corner washes keep large dark areas from feeling flat */
+    background-image: radial-gradient(ellipse 80% 50% at 8% -10%, var(--wash-a), transparent),
+      radial-gradient(ellipse 60% 50% at 100% 100%, var(--wash-b), transparent);
+    background-attachment: fixed;
+  }
+
+  /* Theme transition — skipped for users who prefer reduced motion */
+  body,
+  body * {
+    transition-property: background-color, border-color, color, fill, stroke;
+    transition-duration: 180ms;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* Visible, consistent keyboard focus everywhere */
+  :focus-visible {
+    @apply outline-none ring-2 ring-primary/70 ring-offset-2;
+    --tw-ring-offset-color: rgb(var(--c-canvas));
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-surface-highest;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-content-faint;
+  }
+
+  /* Native select options need an explicit background on dark themes */
+  select option {
+    background: rgb(var(--c-surface-mid));
+    color: rgb(var(--c-on-surface));
+  }
+}
+
+@layer components {
+  /* ── Glassmorphism ────────────────────────────────────────────────────
+     Translucent fill + blur + hairline border + soft shadow. Applied to
+     cards, panels, the sidebar and the topbar so elevation reads
+     consistently in both themes.                                        */
+  .glass {
+    background-color: rgb(var(--glass-bg) / var(--glass-alpha));
+    border: 1px solid rgb(var(--glass-border) / var(--glass-border-alpha));
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    backdrop-filter: blur(18px) saturate(160%);
+    box-shadow: var(--shadow-card);
+  }
+
+  /* A card that lifts on hover — for clickable/nav cards only */
+  .glass-interactive {
+    @apply glass transition-all duration-200 ease-smooth;
+  }
+  .glass-interactive:hover {
+    border-color: rgb(var(--c-primary) / 0.35);
+    box-shadow: var(--shadow-card), 0 0 24px -8px rgb(var(--c-primary) / 0.3);
+    transform: translateY(-2px);
+  }
+
+  /* Top highlight seam — the detail that makes glass read as glass */
+  .glass-seam::before {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    top: 0;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgb(var(--glass-border) / calc(var(--glass-border-alpha) * 3)),
+      transparent
+    );
+    pointer-events: none;
+  }
+
+  .skeleton {
+    @apply relative overflow-hidden rounded-lg bg-surface-high;
+  }
+  .skeleton::after {
+    content: '';
+    @apply absolute inset-0 -translate-x-full animate-shimmer;
+    background: linear-gradient(90deg, transparent, rgb(var(--glass-border) / 0.09), transparent);
+  }
+
+  /* Numeric/telemetry text: tabular figures stop values jittering on refresh */
+  .tnum {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum';
+  }
+}

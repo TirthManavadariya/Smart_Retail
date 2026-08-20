@@ -42,7 +42,17 @@ def create_app() -> Flask:
     app.register_blueprint(analytics_bp)
 
     # ── Serve frontend static files ──────────────────────────────────
+<<<<<<< HEAD
     FRONTEND_DIR = BACKEND_DIR.parent / "frontend"
+=======
+    # Prefer the built React app in web/dist. If it hasn't been built yet
+    # (no `npm run build`), fall back to the legacy vanilla-JS frontend/ so
+    # the server still comes up with a working UI.
+    REACT_DIST = ROOT_DIR / "web" / "dist"
+    LEGACY_FRONTEND = ROOT_DIR / "frontend"
+    FRONTEND_DIR = REACT_DIST if (REACT_DIST / "index.html").exists() else LEGACY_FRONTEND
+    app.config["FRONTEND_DIR"] = str(FRONTEND_DIR)
+>>>>>>> 8ae6b85 (tirth)
 
     @app.route("/")
     def serve_index():
@@ -72,5 +82,12 @@ def create_app() -> Flask:
 
 if __name__ == "__main__":
     app = create_app()
+<<<<<<< HEAD
     print("\n  >> ShelfIQ API running at http://localhost:5000\n")
+=======
+    served = Path(app.config["FRONTEND_DIR"])
+    which = "React build (web/dist)" if served.name == "dist" else "legacy frontend/"
+    print(f"\n  >> ShelfIQ API running at http://localhost:5000")
+    print(f"  >> Serving UI from: {which}\n")
+>>>>>>> 8ae6b85 (tirth)
     app.run(host="0.0.0.0", port=5000, debug=False, use_reloader=False)

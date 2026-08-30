@@ -456,12 +456,16 @@ export default function AlertsPage() {
               <Select
                 label="Assignee"
                 value={draft.assignee}
+                placeholder="Unassigned"
                 onChange={(assignee) => setDraft((current) => ({ ...current, assignee }))}
                 options={[
                   { value: '', label: 'Unassigned' },
                   ...(associates.data?.associates ?? []).map((a) => ({
                     value: a.name,
-                    label: `${a.name} (${a.status})`,
+                    label: a.name,
+                    badge: (
+                      <Badge variant={a.status === 'Active' ? 'success' : 'warn'}>{a.status}</Badge>
+                    ),
                   })),
                 ]}
                 className="w-full"

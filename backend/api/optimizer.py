@@ -19,10 +19,10 @@ def optimizer_results():
     store_id = request.args.get("store_id", "STORE01")
     planogram = _load_planogram(store_id)
     sales_df = _load_sku_metrics(store_id)
-    if planogram is None or sales_df.empty:
+    config = STORE_CONFIG.get(store_id)
+    if planogram is None or sales_df.empty or config is None:
         return jsonify({"available": False})
 
-    config = STORE_CONFIG[store_id]
     total_slots = config["aisles"] * config["shelves_per_aisle"] * config["sections_per_shelf"]
     filled, eye_level_skus, all_placed = 0, set(), {}
     for aisle in planogram.get("aisles", []):
@@ -106,8 +106,10 @@ def planogram_grid():
     if not planogram:
         return jsonify({"error": "No planogram"}), 404
     aisles = planogram.get("aisles", [])
+    if not aisles:
+        return jsonify({"aisle_names": [], "shelves": []})
     aisle_names = [{"id": a["aisle_id"], "name": a["aisle_name"]} for a in aisles]
-    if aisle_idx >= len(aisles):
+    if aisle_idx < 0 or aisle_idx >= len(aisles):
         aisle_idx = 0
     aisle = aisles[aisle_idx]
     shelves = sorted(aisle.get("shelves", []), key=lambda s: s["shelf_number"], reverse=True)

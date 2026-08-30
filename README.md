@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # 🛒 ShelfIQ — Smart Retail Shelf Intelligence
 
 > Computer Vision-Driven Inventory Monitoring and Demand Optimization
@@ -331,6 +330,3 @@ Prama Innovations India Pvt. Ltd.
 ## 📄 License
 
 This project is built for the Bug404 Hackathon challenge.
-=======
-# Smart_Retail
->>>>>>> 4446a783c6e2532374f15d8a76d563377e081417

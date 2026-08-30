@@ -73,6 +73,17 @@ async function parse<T>(res: Response): Promise<T> {
 
   const body: unknown = await res.json();
 
+  // The API wraps every JSON response in a { success, data, message } envelope.
+  // Unwrap it here so callers keep receiving the inner payload types unchanged.
+  if (body && typeof body === 'object' && 'success' in body && 'data' in body) {
+    const env = body as { success: boolean; data: unknown; message?: string; detail?: string };
+    if (!env.success) {
+      throw new ApiError(env.message || `Request failed (${res.status})`, res.status, env.detail);
+    }
+    return env.data as T;
+  }
+
+  // Fallback for any non-enveloped response (kept for resilience).
   if (!res.ok) {
     const record = (body ?? {}) as Record<string, unknown>;
     const message =

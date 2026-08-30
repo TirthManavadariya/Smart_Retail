@@ -36,7 +36,8 @@ def category_performance():
     np.random.seed(hash(store_id + "analysis") % 2**31)
     cats = ["Beverages", "Dairy", "Produce", "Snacks", "Frozen", "Bakery"]
     vals = [int(np.random.randint(15, 45)) for _ in cats]
-    colors = ["#6ee6ee", "#5ed8e0", "#4ecad2", "#3db8c0", "#cecb5b", "#bcc9ca"]
+    # Monochrome grayscale ramp — categorical data is not a status signal.
+    colors = ["#0a0a0a", "#333333", "#5c5c5c", "#858585", "#adadad", "#cccccc"]
     return jsonify({"labels": cats, "values": vals, "colors": colors})
 
 
@@ -49,7 +50,7 @@ def stockout_heatmap():
 
 @analytics_bp.route("/api/settings/save", methods=["POST"])
 def save_settings():
-    data = request.get_json()
+    data = request.get_json(silent=True) or {}
     # In production, persist to DB. For now, just acknowledge.
     return jsonify({"status": "saved", "settings": data})
 

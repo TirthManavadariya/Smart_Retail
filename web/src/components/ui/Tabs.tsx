@@ -45,7 +45,7 @@ export function Tabs<T extends string>({
               'inline-flex items-center gap-1.5 rounded-lg font-semibold transition-all duration-150 ease-smooth',
               size === 'sm' ? 'px-2.5 py-1 text-2xs' : 'px-3.5 py-1.5 text-xs',
               active
-                ? 'bg-primary text-primary-on shadow-[0_2px_10px_-4px_rgb(var(--c-primary)/0.8)]'
+                ? 'bg-primary text-primary-on'
                 : 'text-content-muted hover:bg-surface-high hover:text-content',
             )}
           >

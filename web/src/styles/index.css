@@ -3,108 +3,112 @@
 @tailwind utilities;
 
 /* ═══════════════════════════════════════════════════════════════════════
-   ShelfIQ design tokens
-   Palette derives from the Material 3 scheme in stitch/ (cyan #6ee6ee on
-   #0b1323), which is also the palette declared in .streamlit/config.toml.
-   Values are space-separated RGB channels so Tailwind alpha modifiers work.
+   ShelfIQ design system — Minimal black & white.
+   Pure white canvas, near-black type, thin gray borders, black buttons.
+   Colour is reserved for functional status only (danger/warn/success).
+   Every value is a space-separated RGB triple so Tailwind alpha modifiers
+   (bg-primary/10, border-line/60) work in both themes.
    ═══════════════════════════════════════════════════════════════════════ */
 
 @layer base {
   :root,
-  [data-theme='dark'] {
-    color-scheme: dark;
-
-    --c-canvas: 8 14 30; /* #080e1e */
-    --c-surface: 11 19 35; /* #0b1323 */
-    --c-surface-lowest: 6 14 30; /* #060e1e */
-    --c-surface-low: 20 27 44; /* #141b2c */
-    --c-surface-mid: 24 32 48; /* #182030 */
-    --c-surface-high: 34 42 59; /* #222a3b */
-    --c-surface-highest: 45 53 70; /* #2d3546 */
-    --c-surface-bright: 49 57 75; /* #31394b */
-
-    --c-on-surface: 219 226 249; /* #dbe2f9 */
-    --c-on-surface-variant: 156 171 190; /* #9cabbe */
-    --c-on-surface-faint: 116 132 152; /* #748498 */
-
-    --c-outline: 134 147 148; /* #869394 */
-    --c-outline-variant: 61 73 74; /* #3d494a */
-
-    --c-primary: 110 230 238; /* #6ee6ee */
-    --c-primary-container: 78 202 210; /* #4ecad2 */
-    --c-on-primary: 0 55 58; /* #00373a */
-
-    --c-warn: 206 203 91; /* #cecb5b */
-    --c-on-warn: 51 50 0; /* #333200 */
-
-    --c-danger: 255 180 171; /* #ffb4ab */
-    --c-on-danger: 105 0 5; /* #690005 */
-
-    --c-success: 94 216 165; /* #5ed8a5 */
-    --c-on-success: 0 55 36;
-
-    --c-violet: 196 181 253; /* #c4b5fd */
-    --c-on-violet: 42 22 92;
-
-    /* Glass surfaces: translucent elevation + blur */
-    --glass-bg: 20 27 44;
-    --glass-alpha: 0.62;
-    --glass-border: 255 255 255;
-    --glass-border-alpha: 0.07;
-
-    --shadow-card: 0 1px 2px rgb(0 0 0 / 0.28), 0 8px 24px -8px rgb(0 0 0 / 0.5);
-    --shadow-pop: 0 18px 48px -12px rgb(0 0 0 / 0.7);
-
-    /* Ambient page wash */
-    --wash-a: rgb(110 230 238 / 0.05);
-    --wash-b: rgb(129 140 248 / 0.05);
-  }
-
   [data-theme='light'] {
     color-scheme: light;
 
-    --c-canvas: 242 246 251; /* #f2f6fb */
-    --c-surface: 255 255 255;
+    /* ── Canvas & neutral elevation ladder ── */
+    --c-canvas: 255 255 255; /* #ffffff pure white */
+    --c-surface: 255 255 255; /* #ffffff cards */
     --c-surface-lowest: 255 255 255;
-    --c-surface-low: 246 249 253; /* #f6f9fd */
-    --c-surface-mid: 237 242 249; /* #edf2f9 */
-    --c-surface-high: 226 233 243; /* #e2e9f3 */
-    --c-surface-highest: 214 223 236; /* #d6dfec */
+    --c-surface-low: 250 250 250; /* #fafafa neutral-50 — row hover, footers */
+    --c-surface-mid: 245 245 245; /* #f5f5f5 neutral-100 — inputs, table head, skeleton */
+    --c-surface-high: 229 229 229; /* #e5e5e5 neutral-200 — stronger hover */
+    --c-surface-highest: 212 212 212; /* #d4d4d4 neutral-300 */
     --c-surface-bright: 255 255 255;
 
-    --c-on-surface: 20 27 42; /* #141b2a */
-    --c-on-surface-variant: 71 85 105; /* #475569 */
-    --c-on-surface-faint: 110 124 145;
+    /* ── Content: black → dark gray → light gray ── */
+    --c-on-surface: 10 10 10; /* #0a0a0a near-black */
+    --c-on-surface-variant: 82 82 82; /* #525252 neutral-600 secondary text */
+    --c-on-surface-faint: 163 163 163; /* #a3a3a3 neutral-400 captions */
 
-    --c-outline: 113 120 126; /* #71787e */
-    --c-outline-variant: 199 209 222; /* #c7d1de */
+    /* ── Thin gray borders ── */
+    --c-outline: 212 212 212; /* #d4d4d4 neutral-300 */
+    --c-outline-variant: 229 229 229; /* #e5e5e5 neutral-200 default border */
 
-    --c-primary: 0 105 110; /* #00696e — M3 light primary (stitch inverse-primary) */
-    --c-primary-container: 0 82 86; /* #005256 */
-    --c-on-primary: 255 255 255;
+    /* ── Primary = near-black; hover = dark gray ── */
+    --c-primary: 10 10 10; /* #0a0a0a */
+    --c-primary-container: 38 38 38; /* #262626 neutral-800 */
+    --c-primary-hover: 64 64 64; /* #404040 neutral-700 — button hover */
+    --c-on-primary: 255 255 255; /* white text on black */
 
-    --c-warn: 133 106 0; /* #856a00 */
+    /* ── Functional status colour (kept for meaning/accessibility) ── */
+    --c-warn: 180 83 9; /* #b45309 amber-700 */
     --c-on-warn: 255 255 255;
-
-    --c-danger: 186 26 26; /* #ba1a1a */
+    --c-danger: 220 38 38; /* #dc2626 red-600 */
     --c-on-danger: 255 255 255;
-
-    --c-success: 0 122 90; /* #007a5a */
+    --c-success: 21 128 61; /* #15803d green-700 */
     --c-on-success: 255 255 255;
-
-    --c-violet: 91 60 190; /* #5b3cbe */
+    /* Decorative accent folded into the monochrome scale */
+    --c-violet: 64 64 64; /* #404040 neutral-700 */
     --c-on-violet: 255 255 255;
 
+    /* ── Cards: flat white, solid hairline border, whisper of shadow ── */
     --glass-bg: 255 255 255;
-    --glass-alpha: 0.72;
-    --glass-border: 15 23 42;
-    --glass-border-alpha: 0.08;
+    --glass-alpha: 1;
+    --glass-border: 229 229 229; /* neutral-200 */
+    --glass-border-alpha: 1;
+    --glass-blur: 0px;
 
-    --shadow-card: 0 1px 2px rgb(15 23 42 / 0.05), 0 8px 24px -10px rgb(15 23 42 / 0.12);
-    --shadow-pop: 0 18px 48px -12px rgb(15 23 42 / 0.22);
+    --shadow-card: 0 1px 2px rgb(0 0 0 / 0.04);
+    --shadow-pop: 0 8px 24px -10px rgb(0 0 0 / 0.14), 0 2px 6px -3px rgb(0 0 0 / 0.08);
 
-    --wash-a: rgb(0 105 110 / 0.05);
-    --wash-b: rgb(79 70 229 / 0.04);
+    --wash-a: transparent;
+    --wash-b: transparent;
+  }
+
+  [data-theme='dark'] {
+    color-scheme: dark;
+
+    --c-canvas: 10 10 10; /* #0a0a0a */
+    --c-surface: 23 23 23; /* #171717 neutral-900 */
+    --c-surface-lowest: 10 10 10;
+    --c-surface-low: 23 23 23;
+    --c-surface-mid: 38 38 38; /* #262626 neutral-800 */
+    --c-surface-high: 64 64 64; /* #404040 neutral-700 */
+    --c-surface-highest: 82 82 82; /* #525252 neutral-600 */
+    --c-surface-bright: 38 38 38;
+
+    --c-on-surface: 250 250 250; /* #fafafa near-white */
+    --c-on-surface-variant: 163 163 163; /* #a3a3a3 neutral-400 */
+    --c-on-surface-faint: 115 115 115; /* #737373 neutral-500 */
+
+    --c-outline: 82 82 82; /* neutral-600 */
+    --c-outline-variant: 64 64 64; /* #404040 neutral-700 border */
+
+    --c-primary: 250 250 250; /* white */
+    --c-primary-container: 212 212 212;
+    --c-primary-hover: 212 212 212; /* light gray hover */
+    --c-on-primary: 10 10 10; /* black text on white */
+
+    --c-warn: 245 158 11; /* amber-500 */
+    --c-on-warn: 20 20 20;
+    --c-danger: 248 113 113; /* red-400 */
+    --c-on-danger: 20 20 20;
+    --c-success: 74 222 128; /* green-400 */
+    --c-on-success: 20 20 20;
+    --c-violet: 163 163 163; /* neutral-400 */
+    --c-on-violet: 20 20 20;
+
+    --glass-bg: 23 23 23;
+    --glass-alpha: 1;
+    --glass-border: 64 64 64;
+    --glass-border-alpha: 1;
+    --glass-blur: 0px;
+
+    --shadow-card: 0 1px 2px rgb(0 0 0 / 0.4);
+    --shadow-pop: 0 12px 32px -10px rgb(0 0 0 / 0.7);
+
+    --wash-a: transparent;
+    --wash-b: transparent;
   }
 
   * {
@@ -118,17 +122,13 @@
   body {
     @apply bg-canvas font-sans text-content antialiased;
     min-height: 100vh;
-    /* Ambient corner washes keep large dark areas from feeling flat */
-    background-image: radial-gradient(ellipse 80% 50% at 8% -10%, var(--wash-a), transparent),
-      radial-gradient(ellipse 60% 50% at 100% 100%, var(--wash-b), transparent);
-    background-attachment: fixed;
   }
 
   /* Theme transition — skipped for users who prefer reduced motion */
   body,
   body * {
     transition-property: background-color, border-color, color, fill, stroke;
-    transition-duration: 180ms;
+    transition-duration: 160ms;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   }
 
@@ -145,7 +145,7 @@
 
   /* Visible, consistent keyboard focus everywhere */
   :focus-visible {
-    @apply outline-none ring-2 ring-primary/70 ring-offset-2;
+    @apply outline-none ring-2 ring-primary/60 ring-offset-2;
     --tw-ring-offset-color: rgb(var(--c-canvas));
   }
 
@@ -163,59 +163,45 @@
     @apply bg-content-faint;
   }
 
-  /* Native select options need an explicit background on dark themes */
   select option {
-    background: rgb(var(--c-surface-mid));
+    background: rgb(var(--c-surface));
     color: rgb(var(--c-on-surface));
   }
 }
 
 @layer components {
-  /* ── Glassmorphism ────────────────────────────────────────────────────
-     Translucent fill + blur + hairline border + soft shadow. Applied to
-     cards, panels, the sidebar and the topbar so elevation reads
-     consistently in both themes.                                        */
+  /* ── Card surface ─────────────────────────────────────────────────────
+     Flat card separated from the canvas by a thin border, not a shadow.
+     Used for cards, KPI tiles, the sidebar and the topbar so the whole app
+     shares one clean, bordered surface treatment.                         */
   .glass {
     background-color: rgb(var(--glass-bg) / var(--glass-alpha));
     border: 1px solid rgb(var(--glass-border) / var(--glass-border-alpha));
-    -webkit-backdrop-filter: blur(18px) saturate(160%);
-    backdrop-filter: blur(18px) saturate(160%);
     box-shadow: var(--shadow-card);
   }
 
-  /* A card that lifts on hover — for clickable/nav cards only */
+  /* Clickable/nav cards: a slightly darker border on hover, no lift/glow */
   .glass-interactive {
-    @apply glass transition-all duration-200 ease-smooth;
+    @apply glass transition-colors duration-150 ease-smooth;
   }
   .glass-interactive:hover {
-    border-color: rgb(var(--c-primary) / 0.35);
-    box-shadow: var(--shadow-card), 0 0 24px -8px rgb(var(--c-primary) / 0.3);
-    transform: translateY(-2px);
+    border-color: rgb(var(--c-outline));
+    background-color: rgb(var(--c-surface-low));
   }
 
-  /* Top highlight seam — the detail that makes glass read as glass */
+  /* Flat design — no glass highlight seam */
   .glass-seam::before {
-    content: '';
-    position: absolute;
-    inset-inline: 0;
-    top: 0;
-    height: 1px;
-    background: linear-gradient(
-      90deg,
-      transparent,
-      rgb(var(--glass-border) / calc(var(--glass-border-alpha) * 3)),
-      transparent
-    );
-    pointer-events: none;
+    content: none;
   }
 
+  /* Loading skeleton — soft neutral block with a gentle shimmer sweep */
   .skeleton {
-    @apply relative overflow-hidden rounded-lg bg-surface-high;
+    @apply relative overflow-hidden rounded-lg bg-surface-mid;
   }
   .skeleton::after {
     content: '';
     @apply absolute inset-0 -translate-x-full animate-shimmer;
-    background: linear-gradient(90deg, transparent, rgb(var(--glass-border) / 0.09), transparent);
+    background: linear-gradient(90deg, transparent, rgb(0 0 0 / 0.05), transparent);
   }
 
   /* Numeric/telemetry text: tabular figures stop values jittering on refresh */

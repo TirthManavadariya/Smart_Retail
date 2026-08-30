@@ -232,7 +232,10 @@ class ShelfDetector:
 
         if boxes:
             indices = cv2.dnn.NMSBoxes(boxes, [0.9] * len(boxes), 0.5, 0.35)
-            filtered_boxes = [boxes[i] for i in indices]
+            # NMSBoxes returns either a flat array or an Nx1 nested array
+            # depending on the OpenCV version — flatten so indexing is safe.
+            idx_list = np.array(indices).flatten().tolist() if len(indices) else []
+            filtered_boxes = [boxes[i] for i in idx_list]
             # Sort top-to-bottom, left-to-right
             filtered_boxes.sort(key=lambda b: ((b[1] // max(1, h // 6)) * 10000 + b[0]))
 

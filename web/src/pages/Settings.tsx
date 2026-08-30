@@ -251,8 +251,8 @@ export default function SettingsPage() {
               <div className="grid grid-cols-2 gap-3">
                 {(
                   [
-                    { id: 'dark' as Theme, label: 'Dark', icon: MoonStar, hint: 'Default — built for store back-office displays' },
-                    { id: 'light' as Theme, label: 'Light', icon: Sun, hint: 'For bright shop-floor tablets' },
+                    { id: 'light' as Theme, label: 'Light', icon: Sun, hint: 'Default — clean, bright shop-floor view' },
+                    { id: 'dark' as Theme, label: 'Dark', icon: MoonStar, hint: 'For dim store back-office displays' },
                   ]
                 ).map((option) => {
                   const Icon = option.icon;

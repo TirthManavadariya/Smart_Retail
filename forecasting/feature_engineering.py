@@ -39,7 +39,48 @@ def engineer_features(pos_df: pd.DataFrame, weather_df: pd.DataFrame) -> pd.Data
         return pos_df
 
     df = pos_df.copy()
-    df["date"] = pd.to_datetime(df["date"])
+    df["date"] = pd.to_datetime(df["date"], errors="coerce")
+    df = df.dropna(subset=["date"])
+
+    # ── Collapse to ONE row per (store, sku, day) BEFORE lagging ──────────
+    # POS data has many transactions per SKU per day. If we lag/roll over the
+    # raw rows, shift(1) means "previous transaction", not "yesterday". Daily
+    # aggregation first makes shift(n)/rolling(n) mean n calendar days.
+    agg: dict = {"quantity_sold": "sum"}
+    if "revenue" in df.columns:
+        agg["revenue"] = "sum"
+    if "unit_price" in df.columns:
+        agg["unit_price"] = "mean"
+    if "promotion_flag" in df.columns:
+        agg["promotion_flag"] = "max"
+    for col in ["product_name", "category"]:
+        if col in df.columns:
+            agg[col] = "first"
+    daily = df.groupby(["store_id", "sku_id", "date"], as_index=False).agg(agg)
+
+    # ── Reindex each series to a gap-free daily range ────────────────────
+    # Missing days become explicit zero-demand days so lag_7 truly is "7 days
+    # ago" even when the store had no sale on some intervening day.
+    frames = []
+    for (store_id, sku_id), grp in daily.groupby(["store_id", "sku_id"], sort=False):
+        grp = grp.set_index("date").sort_index()
+        full_range = pd.date_range(grp.index.min(), grp.index.max(), freq="D")
+        grp = grp.reindex(full_range)
+        grp["store_id"] = store_id
+        grp["sku_id"] = sku_id
+        grp["quantity_sold"] = grp["quantity_sold"].fillna(0)
+        if "revenue" in grp.columns:
+            grp["revenue"] = grp["revenue"].fillna(0)
+        if "promotion_flag" in grp.columns:
+            grp["promotion_flag"] = grp["promotion_flag"].fillna(0)
+        if "unit_price" in grp.columns:
+            grp["unit_price"] = grp["unit_price"].ffill().bfill()
+        for col in ["product_name", "category"]:
+            if col in grp.columns:
+                grp[col] = grp[col].ffill().bfill()
+        frames.append(grp.rename_axis("date").reset_index())
+    df = pd.concat(frames, ignore_index=True)
+    df = df.sort_values(["store_id", "sku_id", "date"]).reset_index(drop=True)
 
     # Calendar features
     df["day_of_week"] = df["date"].dt.dayofweek
@@ -51,14 +92,12 @@ def engineer_features(pos_df: pd.DataFrame, weather_df: pd.DataFrame) -> pd.Data
     df["is_month_end"] = df["date"].dt.is_month_end.astype(int)
     df["week_of_year"] = df["date"].dt.isocalendar().week.astype(int)
 
-    # Sort by sku and date for lag calculation
-    df = df.sort_values(["store_id", "sku_id", "date"])
-
-    # Lag features (per SKU per store)
+    # Lag features (per SKU per store) — now shift by calendar day
+    grouped = df.groupby(["store_id", "sku_id"])["quantity_sold"]
     for lag in [1, 7, 14, 28]:
-        df[f"lag_{lag}"] = df.groupby(["store_id", "sku_id"])["quantity_sold"].shift(lag)
+        df[f"lag_{lag}"] = grouped.shift(lag)
 
-    # Rolling statistics
+    # Rolling statistics — windows now count days, not transaction rows
     for window in [7, 14, 30]:
         df[f"rolling_mean_{window}"] = (
             df.groupby(["store_id", "sku_id"])["quantity_sold"]
@@ -66,7 +105,7 @@ def engineer_features(pos_df: pd.DataFrame, weather_df: pd.DataFrame) -> pd.Data
         )
         df[f"rolling_std_{window}"] = (
             df.groupby(["store_id", "sku_id"])["quantity_sold"]
-            .transform(lambda x: x.rolling(window, min_periods=1).std())
+            .transform(lambda x: x.rolling(window, min_periods=2).std())
         )
 
     # Merge weather data
@@ -102,16 +141,18 @@ def prepare_prophet_data(df: pd.DataFrame, sku_id: str, store_id: str) -> pd.Dat
     mask = (df["sku_id"] == sku_id) & (df["store_id"] == store_id)
     subset = df[mask].copy()
 
-    if subset.empty:
+    if subset.empty or "quantity_sold" not in subset.columns:
         return pd.DataFrame(columns=["ds", "y"])
 
-    # Aggregate daily
-    daily = subset.groupby("date").agg({
-        "quantity_sold": "sum",
-        "promotion_flag": "max",
-    }).reset_index()
-
-    daily.columns = ["ds", "y", "promotion"]
+    # Aggregate daily — only include promotion_flag if the column exists.
+    agg_map = {"quantity_sold": "sum"}
+    has_promo = "promotion_flag" in subset.columns
+    if has_promo:
+        agg_map["promotion_flag"] = "max"
+    daily = subset.groupby("date").agg(agg_map).reset_index()
+    daily.columns = ["ds", "y", "promotion"] if has_promo else ["ds", "y"]
+    if not has_promo:
+        daily["promotion"] = 0
 
     # Add regressors if available
     if "temperature_c" in subset.columns:

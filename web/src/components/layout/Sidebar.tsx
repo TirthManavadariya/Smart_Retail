@@ -43,7 +43,7 @@ export function Sidebar({
       >
         {/* Brand */}
         <div className="flex h-16 shrink-0 items-center gap-3 border-b border-line/60 px-4">
-          <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-primary-container to-primary text-primary-on shadow-glow-primary">
+          <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-primary text-primary-on">
             <ScanBarcode className="size-[1.15rem]" />
           </span>
           {!collapsed && (
@@ -149,7 +149,7 @@ export function Sidebar({
               collapsed && 'justify-center',
             )}
           >
-            <span className="grid size-8 shrink-0 place-items-center rounded-full bg-gradient-to-br from-primary-container to-primary text-primary-on">
+            <span className="grid size-8 shrink-0 place-items-center rounded-full bg-primary text-primary-on">
               <UserRound className="size-4" />
             </span>
             {!collapsed && (

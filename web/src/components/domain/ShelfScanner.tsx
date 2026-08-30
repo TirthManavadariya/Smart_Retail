@@ -425,8 +425,8 @@ function DetectionViewer({
               className={cn(
                 'absolute rounded border-2 transition-all duration-150',
                 hoveredId === item.id
-                  ? 'border-primary shadow-glow-primary'
-                  : 'border-primary/70',
+                  ? 'border-white shadow-[0_0_0_2px_rgba(0,0,0,0.55)]'
+                  : 'border-white/80',
                 dim && 'opacity-25',
               )}
               style={{
@@ -434,7 +434,7 @@ function DetectionViewer({
                 top: `${(y / result.image_height) * 100}%`,
                 width: `${(width / result.image_width) * 100}%`,
                 height: `${(height / result.image_height) * 100}%`,
-                background: 'rgb(var(--c-primary) / 0.12)',
+                background: 'rgb(255 255 255 / 0.14)',
               }}
             >
               <span

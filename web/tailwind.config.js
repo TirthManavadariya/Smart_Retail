@@ -37,6 +37,7 @@ export default {
         primary: {
           DEFAULT: token('primary'),
           container: token('primary-container'),
+          hover: token('primary-hover'),
           on: token('on-primary'),
         },
         warn: { DEFAULT: token('warn'), on: token('on-warn') },

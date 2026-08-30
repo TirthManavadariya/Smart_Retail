@@ -54,8 +54,11 @@ def alert_inbox():
 
 @alerts_bp.route("/api/alerts/assign", methods=["POST"])
 def assign_alert():
-    data = request.get_json()
-    alert_key = f"alert_{data.get('alert_id')}"
+    data = request.get_json(silent=True) or {}
+    alert_id = data.get("alert_id")
+    if alert_id is None:
+        return jsonify({"error": "alert_id is required"}), 400
+    alert_key = f"alert_{alert_id}"
     associates = ["Priya M.", "Rajesh D.", "Amit K.", "Kavita L.", "Sneha R.", "Vikram S."]
     import random
     assignee = random.choice(associates)
@@ -82,7 +85,9 @@ def task_workflow():
 
 @alerts_bp.route("/api/alerts/tasks", methods=["POST"])
 def create_task():
-    data = request.get_json()
+    data = request.get_json(silent=True) or {}
+    if not data.get("title"):
+        return jsonify({"error": "title is required"}), 400
     task = {
         "title": data.get("title", ""), "desc": data.get("desc", ""),
         "assignee": data.get("assignee", ""), "urgency": data.get("urgency", "Medium"),

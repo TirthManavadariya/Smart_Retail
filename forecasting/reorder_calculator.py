@@ -69,6 +69,9 @@ class ReorderCalculator:
             ReorderPointResult.
         """
         demand = np.array(daily_demand, dtype=float)
+        # Drop NaN/inf so a single missing forecast day can't poison the mean
+        # and silently report needs_reorder=False for a SKU that must reorder.
+        demand = demand[np.isfinite(demand)]
 
         if len(demand) == 0:
             return ReorderPointResult(
@@ -80,8 +83,10 @@ class ReorderCalculator:
                 days_until_stockout=999, service_level=self.service_level,
             )
 
-        avg_demand = np.mean(demand)
-        std_demand = np.std(demand)
+        avg_demand = float(np.mean(demand))
+        # Sample std (ddof=1) is the correct convention for safety stock; guard
+        # the single-observation case where ddof=1 is undefined.
+        std_demand = float(np.std(demand, ddof=1)) if len(demand) > 1 else 0.0
 
         # Safety stock calculation
         safety_stock = self.z_score * std_demand * np.sqrt(self.lead_time)

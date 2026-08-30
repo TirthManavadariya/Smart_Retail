@@ -81,7 +81,7 @@ export default function AlertsPage() {
       header: 'Associate',
       cell: (row) => (
         <div className="flex items-center gap-2.5">
-          <span className="grid size-8 shrink-0 place-items-center rounded-full bg-gradient-to-br from-primary-container to-primary text-2xs font-bold text-primary-on">
+          <span className="grid size-8 shrink-0 place-items-center rounded-full bg-primary text-2xs font-bold text-primary-on">
             {initials(row.name)}
           </span>
           <StackedCell primary={row.name} secondary="Floor team" />

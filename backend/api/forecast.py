@@ -21,7 +21,12 @@ def forecast_accuracy():
 @forecast_bp.route("/api/forecast/chart")
 def forecast_chart():
     store_id = request.args.get("store_id", "STORE01")
-    safety = int(request.args.get("safety", 15))
+    # Tolerate malformed/non-integer values instead of raising a 500.
+    try:
+        safety = int(float(request.args.get("safety", 15)))
+    except (TypeError, ValueError):
+        safety = 15
+    safety = max(0, min(safety, 100))
     horizon = request.args.get("horizon", "30D")
     freq = request.args.get("freq", "Daily")
     weather = request.args.get("weather", "true") == "true"
@@ -63,16 +68,16 @@ def forecast_chart():
 def replenishment():
     items = [
         {"sku": "DRK-CL-500ML", "name": "Sparkling Water - Case of 12", "stock": 142,
-         "stock_status": "Below Safety (250)", "stock_color": "#ffb4ab", "demand": 892,
+         "stock_status": "Below Safety (250)", "stock_color": "#dc2626", "demand": 892,
          "min_max": "400 / 1200", "order": 1050, "has_action": True},
         {"sku": "SNK-CH-90G", "name": "Classic Sea Salt Chips", "stock": 580,
-         "stock_status": "Healthy", "stock_color": "#6ee6ee", "demand": 320,
+         "stock_status": "Healthy", "stock_color": "#16a34a", "demand": 320,
          "min_max": "200 / 800", "order": 0, "has_action": False},
         {"sku": "DAI-MK-2L", "name": "Whole Milk 2L Bottle", "stock": 85,
-         "stock_status": "Expiring in 2D", "stock_color": "#cecb5b", "demand": 450,
+         "stock_status": "Expiring in 2D", "stock_color": "#d97706", "demand": 450,
          "min_max": "100 / 500", "order": 415, "has_action": True},
         {"sku": "CON-SU-1KG", "name": "Granulated Sugar 1kg", "stock": 1200,
-         "stock_status": "Overstock", "stock_color": "#bcc9ca", "demand": 45,
+         "stock_status": "Overstock", "stock_color": "#64748b", "demand": 45,
          "min_max": "200 / 600", "order": 0, "has_action": False},
     ]
     return jsonify(items)

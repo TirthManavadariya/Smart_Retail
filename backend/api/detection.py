@@ -2,9 +2,9 @@
 Detection endpoints — Image upload + YOLO inference, camera frame.
 """
 import sys
+import io
 from flask import Blueprint, jsonify, request, send_file
 from pathlib import Path
-import tempfile, io, sys
 
 detection_bp = Blueprint("detection", __name__)
 # backend/api/detection.py → .parent = api → .parent = backend
@@ -13,6 +13,18 @@ ROOT_DIR = BACKEND_DIR.parent
 sys.path.insert(0, str(ROOT_DIR))
 sys.path.insert(0, str(BACKEND_DIR))
 sys.path.insert(0, str(BACKEND_DIR / "core"))
+
+# The YOLO model is expensive to construct (weights load + warm-up), so build
+# the detector once and reuse it across requests instead of per-call.
+_detector = None
+
+
+def _get_detector():
+    global _detector
+    if _detector is None:
+        from models.shelf_detector import ShelfDetector
+        _detector = ShelfDetector()
+    return _detector
 
 
 @detection_bp.route("/api/detect", methods=["POST"])
@@ -26,7 +38,6 @@ def detect_products():
 
     try:
         import numpy as np, cv2, base64
-        from models.shelf_detector import ShelfDetector
 
         # Decode image directly in-memory
         nparr = np.frombuffer(file_bytes, np.uint8)
@@ -34,7 +45,7 @@ def detect_products():
         if image is None:
             return jsonify({"error": "Could not decode uploaded image format"}), 400
 
-        detector = ShelfDetector()
+        detector = _get_detector()
         result = detector.detect_products(image)
 
         # Annotated image

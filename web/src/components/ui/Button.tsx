@@ -6,11 +6,10 @@ type Variant = 'primary' | 'secondary' | 'ghost' | 'danger';
 type Size = 'sm' | 'md';
 
 const variants: Record<Variant, string> = {
-  primary:
-    'bg-primary text-primary-on font-semibold hover:brightness-110 active:brightness-95 shadow-[0_4px_16px_-6px_rgb(var(--c-primary)/0.7)]',
-  secondary: 'bg-surface-high text-content hover:bg-surface-highest border border-line',
-  ghost: 'text-content-muted hover:text-content hover:bg-surface-high',
-  danger: 'bg-danger/15 text-danger border border-danger/30 hover:bg-danger/25',
+  primary: 'bg-primary text-primary-on font-semibold hover:bg-primary-hover active:bg-primary-hover',
+  secondary: 'bg-surface text-content border border-line hover:bg-surface-mid',
+  ghost: 'text-content-muted hover:text-content hover:bg-surface-mid',
+  danger: 'bg-surface text-danger border border-danger/40 hover:bg-danger/10',
 };
 
 const sizes: Record<Size, string> = {
@@ -59,8 +58,8 @@ export const IconButton = forwardRef<
       aria-label={label}
       title={label}
       className={cn(
-        'relative grid size-9 shrink-0 place-items-center rounded-xl border border-line bg-surface-mid/70',
-        'text-content-muted transition-colors hover:bg-surface-high hover:text-content',
+        'relative grid size-9 shrink-0 place-items-center rounded-xl border border-line bg-surface',
+        'text-content-muted transition-colors hover:bg-surface-mid hover:text-content',
         className,
       )}
       {...rest}

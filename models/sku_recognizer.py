@@ -56,8 +56,19 @@ class SKUReferenceDB:
 
     def _build_synthetic_references(self):
         """Build synthetic reference features for known SKUs."""
-        from data.generators.generate_shelf_images import PRODUCT_COLORS
-        from data.generators.generate_pos_data import PRODUCT_NAMES
+        # These imports pull from the data-generator package. Guard them so a
+        # missing/renamed generator module degrades to a small built-in palette
+        # instead of crashing every consumer that constructs this class.
+        try:
+            from data.generators.generate_shelf_images import PRODUCT_COLORS
+            from data.generators.generate_pos_data import PRODUCT_NAMES
+        except Exception as exc:
+            print(f"  ⚠ SKU reference generators unavailable ({exc}); using fallback palette")
+            PRODUCT_COLORS = [
+                (220, 60, 60), (60, 160, 220), (90, 200, 120), (240, 200, 70),
+                (200, 90, 200), (120, 120, 220), (240, 150, 70), (80, 200, 200),
+            ]
+            PRODUCT_NAMES = [f"Product {i + 1}" for i in range(len(PRODUCT_COLORS))]
 
         for i, (color, name) in enumerate(zip(PRODUCT_COLORS, PRODUCT_NAMES[:len(PRODUCT_COLORS)])):
             sku_id = f"SKU{i + 1:03d}"

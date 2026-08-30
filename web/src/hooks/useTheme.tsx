@@ -15,9 +15,10 @@ const ThemeContext = createContext<ThemeContextValue | null>(null);
 
 function readInitialTheme(): Theme {
   // index.html already resolved and applied this before paint; read it back so
-  // React's state matches the DOM exactly and we never double-flash.
+  // React's state matches the DOM exactly and we never double-flash. Light is
+  // the default experience.
   const attr = document.documentElement.getAttribute('data-theme');
-  return attr === 'light' ? 'light' : 'dark';
+  return attr === 'dark' ? 'dark' : 'light';
 }
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
@@ -27,7 +28,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     document.documentElement.setAttribute('data-theme', theme);
     document
       .querySelector('meta[name="theme-color"]')
-      ?.setAttribute('content', theme === 'dark' ? '#0b1323' : '#f2f6fb');
+      ?.setAttribute('content', theme === 'dark' ? '#0b1323' : '#ffffff');
     try {
       localStorage.setItem(STORAGE_KEY, theme);
     } catch {
@@ -74,17 +75,17 @@ export function useChartTheme() {
 
     return {
       theme,
-      primary: read('--c-primary', '#6ee6ee'),
-      warn: read('--c-warn', '#cecb5b'),
-      danger: read('--c-danger', '#ffb4ab'),
-      success: read('--c-success', '#5ed8a5'),
-      violet: read('--c-violet', '#c4b5fd'),
-      axis: read('--c-on-surface-faint', '#748498'),
-      grid: rgba('--c-outline-variant', 0.45, 'rgba(120,130,140,0.35)'),
-      surface: read('--c-surface-mid', '#182030'),
-      text: read('--c-on-surface', '#dbe2f9'),
-      muted: read('--c-on-surface-variant', '#9cabbe'),
-      primarySoft: rgba('--c-primary', 0.18, 'rgba(110,230,238,0.18)'),
+      primary: read('--c-primary', '#4f46e5'),
+      warn: read('--c-warn', '#b45309'),
+      danger: read('--c-danger', '#dc2626'),
+      success: read('--c-success', '#16a34a'),
+      violet: read('--c-violet', '#7c3aed'),
+      axis: read('--c-on-surface-faint', '#94a3b8'),
+      grid: rgba('--c-outline-variant', 0.6, '#f1f5f9'),
+      surface: read('--c-surface-mid', '#f8fafc'),
+      text: read('--c-on-surface', '#0f172a'),
+      muted: read('--c-on-surface-variant', '#475569'),
+      primarySoft: rgba('--c-primary', 0.12, 'rgba(79,70,229,0.12)'),
     };
   }, [theme]);
 }

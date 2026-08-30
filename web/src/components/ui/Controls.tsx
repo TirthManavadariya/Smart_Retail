@@ -125,7 +125,7 @@ export function Select({
   return (
     <div
       className={cn(
-        'inline-flex items-center gap-2 rounded-xl border border-line bg-surface-mid/70 px-3 transition-colors',
+        'inline-flex items-center gap-2 rounded-xl border border-line bg-surface px-3 transition-colors',
         'focus-within:border-primary/60 hover:border-line-strong',
         className,
       )}
@@ -170,7 +170,7 @@ export function TextField({
         value={value}
         placeholder={placeholder}
         onChange={(event) => onChange(event.target.value)}
-        className="w-full rounded-xl border border-line bg-surface-mid/70 px-3 py-2 text-sm text-content
+        className="w-full rounded-xl border border-line bg-surface px-3 py-2 text-sm text-content
           outline-none transition-colors placeholder:text-content-faint focus:border-primary/60"
       />
     </label>

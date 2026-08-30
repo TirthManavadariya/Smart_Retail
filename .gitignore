@@ -36,9 +36,6 @@ Thumbs.db
 
 # IDE
 .vscode/
-<<<<<<< HEAD
-.idea/
-=======
 .idea/
 
 # Frontend (web/) — Node dependencies and build output
@@ -46,4 +43,6 @@ node_modules/
 web/dist/
 *.tsbuildinfo
 .vite/
->>>>>>> 8ae6b85 (tirth)
+
+# Kiro agent tooling / skills (not part of the application)
+.agent/

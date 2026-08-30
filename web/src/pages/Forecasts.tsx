@@ -25,6 +25,7 @@ import { Tabs } from '@/components/ui/Tabs';
 import { AsyncBoundary, ChartSkeleton, KpiSkeleton, Skeleton } from '@/components/ui/States';
 import { keys, useForecastAccuracy, useForecastChart, useReplenishment } from '@/hooks/queries';
 import { useActiveStore } from '@/hooks/useActiveStore';
+import { useDebouncedValue } from '@/hooks/useDebouncedValue';
 import { useToast } from '@/hooks/useToast';
 import { downloadUrl } from '@/lib/api';
 import { cn } from '@/lib/cn';
@@ -48,8 +49,12 @@ export default function ForecastsPage() {
     competitor: false,
   });
 
+  // Debounce the parameter set so dragging the safety slider doesn't fire a
+  // request on every step — the chart catches up once the controls settle.
+  const debouncedQuery = useDebouncedValue(query, 300);
+
   const accuracy = useForecastAccuracy(storeId);
-  const chart = useForecastChart(storeId, query);
+  const chart = useForecastChart(storeId, debouncedQuery);
   const replenishment = useReplenishment();
 
   const [approved, setApproved] = useState<Set<string>>(new Set());
@@ -164,7 +169,7 @@ export default function ForecastsPage() {
               icon={<RefreshCw className="size-4" />}
               loading={chart.isFetching}
               onClick={() => {
-                void queryClient.invalidateQueries({ queryKey: keys.forecastChart(storeId, query) });
+                void queryClient.invalidateQueries({ queryKey: keys.forecastChart(storeId, debouncedQuery) });
                 push({ kind: 'info', title: 'Re-simulating', message: 'Recomputing the demand curve.' });
               }}
             >

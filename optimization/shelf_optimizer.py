@@ -91,6 +91,8 @@ class DataIngestor:
             sku_id, product_name, category, unit_price,
             total_quantity, total_revenue, num_days
         """
+        empty_cols = ["sku_id", "product_name", "category", "unit_price",
+                      "total_quantity", "total_revenue", "num_days"]
         conn = sqlite3.connect(str(self.db_path))
         query = """
             SELECT
@@ -106,8 +108,14 @@ class DataIngestor:
             GROUP BY pt.sku_id, pt.product_name, pt.category
             ORDER BY total_revenue DESC
         """
-        df = pd.read_sql_query(query, conn, params=(store_id,))
-        conn.close()
+        try:
+            df = pd.read_sql_query(query, conn, params=(store_id,))
+        except Exception:
+            # Missing table / empty DB — return a well-formed empty frame so
+            # the pipeline degrades gracefully instead of raising.
+            df = pd.DataFrame(columns=empty_cols)
+        finally:
+            conn.close()
         return df
 
     def get_engagement_data(self, store_id: str) -> pd.DataFrame:

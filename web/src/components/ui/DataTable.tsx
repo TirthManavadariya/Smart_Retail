@@ -70,7 +70,7 @@ export function DataTable<Row>({
               className={cn(
                 'border-b border-line/50 transition-colors last:border-0',
                 onRowClick && 'cursor-pointer',
-                'hover:bg-surface-high/50',
+                'hover:bg-surface-low',
               )}
             >
               {columns.map((col) => (

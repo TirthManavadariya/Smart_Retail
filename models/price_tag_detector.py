@@ -1,4 +1,4 @@
-"""
+﻿"""
 Price Tag Detection via OCR (EasyOCR).
 Detects and reads price tags from shelf images, returning structured
 price data with bounding boxes and confidence scores.
@@ -102,7 +102,7 @@ class PriceTagDetector:
         self._init_attempted = True
 
         if not _EASYOCR_AVAILABLE:
-            print("  ⚠ easyocr not installed — price tag detection disabled")
+            print("  [WARN] easyocr not installed — price tag detection disabled")
             return False
 
         try:
@@ -110,7 +110,7 @@ class PriceTagDetector:
             _reader = self._reader          # cache globally
             return True
         except Exception as e:
-            print(f"  ⚠ Failed to initialize EasyOCR reader: {e}")
+            print(f"  [WARN] Failed to initialize EasyOCR reader: {e}")
             return False
 
     # ── Core detection method ──────────────────────────────────────
@@ -157,7 +157,7 @@ class PriceTagDetector:
         try:
             ocr_results = self._reader.readtext(img)
         except Exception as e:
-            print(f"  ⚠ OCR inference failed: {e}")
+            print(f"  [WARN] OCR inference failed: {e}")
             return PriceDetectionOutput(
                 processing_time_ms=round((time.time() - t0) * 1000, 2),
             )

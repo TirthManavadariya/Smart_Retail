@@ -1,4 +1,4 @@
-"""
+﻿"""
 Synthetic POS transaction data generator.
 Generates 2 years of daily sales data for 50 SKUs across 3 stores
 with seasonal patterns, promotions, and weather-correlated demand.
@@ -128,12 +128,12 @@ def save_pos_data():
     df = generate_pos_data()
     output_path = POS_DATA_DIR / "pos_transactions.csv"
     df.to_csv(output_path, index=False)
-    print(f"  ✓ Saved {len(df):,} transactions to {output_path}")
+    print(f"  [OK] Saved {len(df):,} transactions to {output_path}")
 
     catalog = generate_product_catalog()
     catalog_path = POS_DATA_DIR / "product_catalog.csv"
     catalog.to_csv(catalog_path, index=False)
-    print(f"  ✓ Saved {len(catalog)} products to {catalog_path}")
+    print(f"  [OK] Saved {len(catalog)} products to {catalog_path}")
     return df, catalog
 
 

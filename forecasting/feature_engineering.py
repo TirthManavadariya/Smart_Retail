@@ -1,4 +1,4 @@
-"""
+﻿"""
 Feature engineering for demand forecasting.
 Merges POS data with weather, promotions, events, and calendar features.
 """
@@ -190,10 +190,10 @@ if __name__ == "__main__":
 
     if not pos_df.empty:
         featured = engineer_features(pos_df, weather_df)
-        print(f"  ✓ Features: {featured.shape[1]} columns, {len(featured):,} rows")
+        print(f"  [OK] Features: {featured.shape[1]} columns, {len(featured):,} rows")
         print(f"  Columns: {list(featured.columns)}")
 
         prophet_data = prepare_prophet_data(featured, "SKU001", "STORE01")
-        print(f"  ✓ Prophet data for SKU001/STORE01: {len(prophet_data)} rows")
+        print(f"  [OK] Prophet data for SKU001/STORE01: {len(prophet_data)} rows")
     else:
-        print("  ⚠ No POS data found. Run seed_data.py first.")
+        print("  [WARN] No POS data found. Run seed_data.py first.")

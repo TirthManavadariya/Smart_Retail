@@ -1,4 +1,4 @@
-"""
+﻿"""
 Redis Pub/Sub publisher with in-memory fallback.
 Publishes alerts to Redis channels for real-time consumption.
 """
@@ -79,7 +79,7 @@ class RedisPublisher:
             )
             self.redis_client.ping()
             self.use_redis = True
-            print(f"  ✓ Connected to Redis at {REDIS_HOST}:{REDIS_PORT}")
+            print(f"  [OK] Connected to Redis at {REDIS_HOST}:{REDIS_PORT}")
         except Exception:
             self.use_redis = False
             print("  ℹ Redis unavailable — using in-memory pub/sub fallback")
@@ -121,7 +121,7 @@ class RedisPublisher:
                 else:
                     self.fallback.publish(channel, message)
             except Exception as e:
-                print(f"  ⚠ Publish error on {channel}: {e}")
+                print(f"  [WARN] Publish error on {channel}: {e}")
                 success = False
 
         return success

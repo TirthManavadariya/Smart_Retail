@@ -1,4 +1,4 @@
-"""
+﻿"""
 Alert manager — creates, prioritizes, deduplicates, and manages alerts.
 """
 import sys
@@ -117,7 +117,7 @@ class AlertManager:
             })
             return alert_id
         except Exception as e:
-            print(f"  ⚠ Could not save alert: {e}")
+            print(f"  [WARN] Could not save alert: {e}")
             return 0
 
     def get_active_alerts(self, store_id: str = "") -> list:
@@ -135,7 +135,7 @@ class AlertManager:
             from database.db_manager import db
             db.acknowledge_alert(alert_id, user)
         except Exception as e:
-            print(f"  ⚠ Could not acknowledge alert: {e}")
+            print(f"  [WARN] Could not acknowledge alert: {e}")
 
     def generate_sample_alerts(self, store_id: str = "STORE01", count: int = 10) -> list:
         """Generate sample alerts for demo purposes."""

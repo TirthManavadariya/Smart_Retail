@@ -1,4 +1,4 @@
-"""
+﻿"""
 Prophet-based demand forecaster.
 Predicts product-level demand at each store location with seasonality,
 holidays, and external regressors.
@@ -31,7 +31,7 @@ class DemandForecaster:
             from prophet import Prophet
             self.prophet_available = True
         except ImportError:
-            print("  ⚠ Prophet not available. Using fallback forecaster.")
+            print("  [WARN] Prophet not available. Using fallback forecaster.")
 
     def forecast(
         self,

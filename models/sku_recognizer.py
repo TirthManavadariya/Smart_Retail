@@ -1,4 +1,4 @@
-"""
+﻿"""
 SKU-level product recognition module.
 Matches detected product regions against a reference SKU database
 using feature similarity and structural comparison.
@@ -63,7 +63,7 @@ class SKUReferenceDB:
             from data.generators.generate_shelf_images import PRODUCT_COLORS
             from data.generators.generate_pos_data import PRODUCT_NAMES
         except Exception as exc:
-            print(f"  ⚠ SKU reference generators unavailable ({exc}); using fallback palette")
+            print(f"  [WARN] SKU reference generators unavailable ({exc}); using fallback palette")
             PRODUCT_COLORS = [
                 (220, 60, 60), (60, 160, 220), (90, 200, 120), (240, 200, 70),
                 (200, 90, 200), (120, 120, 220), (240, 150, 70), (80, 200, 200),
@@ -107,7 +107,7 @@ class SKUReferenceDB:
             _clip_model.eval()
             return True
         except Exception as e:
-            print(f"  ⚠ Failed to load CLIP model: {e}")
+            print(f"  [WARN] Failed to load CLIP model: {e}")
             return False
 
     @staticmethod
@@ -174,7 +174,7 @@ class SKURecognizer:
         self.ref_db = reference_db or SKUReferenceDB()
         # Report which backend is active
         if _CLIP_AVAILABLE and self.ref_db._clip_embeddings:
-            print("  ✓ SKU recognizer: CLIP embeddings active")
+            print("  [OK] SKU recognizer: CLIP embeddings active")
         else:
             print("  ℹ SKU recognizer: using color histogram fallback")
 

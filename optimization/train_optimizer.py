@@ -1,4 +1,4 @@
-"""
+﻿"""
 Training & Evaluation Script for the AI Shelf Arrangement Optimizer.
 
 End-to-end pipeline that:
@@ -95,7 +95,7 @@ def step_seed_database(
             "INSERT OR REPLACE INTO stores (store_id, store_name, num_aisles, shelves_per_aisle, sections_per_shelf) VALUES (?, ?, ?, ?, ?)",
             (store_id, config["name"], config["aisles"], config["shelves_per_aisle"], config["sections_per_shelf"]),
         )
-    print(f"  ✓ Inserted {len(STORE_CONFIG)} stores")
+    print(f"  [OK] Inserted {len(STORE_CONFIG)} stores")
 
     # ── Insert products ──
     for _, row in catalog.iterrows():
@@ -103,19 +103,19 @@ def step_seed_database(
             "INSERT OR REPLACE INTO products (sku_id, product_name, category, unit_price, max_stock) VALUES (?, ?, ?, ?, ?)",
             (row["sku_id"], row["product_name"], row["category"], row["unit_price"], int(row["max_stock"])),
         )
-    print(f"  ✓ Inserted {len(catalog)} products")
+    print(f"  [OK] Inserted {len(catalog)} products")
 
     # ── Insert POS transactions ──
     pos_df.to_sql("pos_transactions", conn, if_exists="append", index=False)
-    print(f"  ✓ Inserted {len(pos_df):,} POS transactions")
+    print(f"  [OK] Inserted {len(pos_df):,} POS transactions")
 
     # ── Insert engagement data ──
     engagement_df.to_sql("customer_engagement", conn, if_exists="append", index=False)
-    print(f"  ✓ Inserted {len(engagement_df):,} engagement records")
+    print(f"  [OK] Inserted {len(engagement_df):,} engagement records")
 
     conn.commit()
     conn.close()
-    print(f"  ✓ Database ready at {DATABASE_PATH}")
+    print(f"  [OK] Database ready at {DATABASE_PATH}")
 
 
 # ═══════════════════════════════════════════════════════════════
@@ -145,11 +145,11 @@ def step_run_optimization() -> dict[str, tuple[Planogram, list[SKUMetrics]]]:
         for m in sku_metrics:
             tier_counts[m.tier] = tier_counts.get(m.tier, 0) + 1
 
-        print(f"    ✓ {len(planogram.aisles)} aisles, {total_sections} sections ({filled} filled)")
-        print(f"    ✓ Tiers: {C.GREEN}Premium={tier_counts['Premium']}{C.RESET}, "
+        print(f"    [OK] {len(planogram.aisles)} aisles, {total_sections} sections ({filled} filled)")
+        print(f"    [OK] Tiers: {C.GREEN}Premium={tier_counts['Premium']}{C.RESET}, "
               f"Standard={tier_counts['Standard']}, "
               f"{C.DIM}Economy={tier_counts['Economy']}{C.RESET}")
-        print(f"    ✓ Saved → {path}")
+        print(f"    [OK] Saved → {path}")
 
         results[store_id] = (planogram, sku_metrics)
 
@@ -261,7 +261,7 @@ def step_before_after_comparison(
 
         premium_at_eye = premium_skus & eye_level_skus
         pct = len(premium_at_eye) / len(premium_skus) * 100 if premium_skus else 0
-        status = f"{C.GREEN}✓{C.RESET}" if pct >= 70 else f"{C.YELLOW}⚠{C.RESET}"
+        status = f"{C.GREEN}[OK]{C.RESET}" if pct >= 70 else f"{C.YELLOW}[WARN]{C.RESET}"
         print(f"  {status} {store_id}: {len(premium_at_eye)}/{len(premium_skus)} premium SKUs at eye level ({pct:.0f}%)")
 
 

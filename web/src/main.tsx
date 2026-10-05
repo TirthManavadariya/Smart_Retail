@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter } from 'react-router-dom';
 import { App } from './App';
+import { AuthProvider } from './hooks/useAuth';
 import { ActiveStoreProvider } from './hooks/useActiveStore';
 import { ThemeProvider } from './hooks/useTheme';
 import { ToastProvider } from './hooks/useToast';
@@ -27,12 +28,14 @@ createRoot(container).render(
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
         <ToastProvider>
-          <ActiveStoreProvider>
-            <BrowserRouter>
-              <App />
-            </BrowserRouter>
-            <Toaster />
-          </ActiveStoreProvider>
+          <AuthProvider>
+            <ActiveStoreProvider>
+              <BrowserRouter>
+                <App />
+              </BrowserRouter>
+              <Toaster />
+            </ActiveStoreProvider>
+          </AuthProvider>
         </ToastProvider>
       </ThemeProvider>
     </QueryClientProvider>

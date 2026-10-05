@@ -1,4 +1,4 @@
-"""
+﻿"""
 End-to-end shelf analysis pipeline.
 Orchestrates: Image → Detection → SKU Recognition → Stock Classification → DB Storage.
 """
@@ -221,7 +221,7 @@ class ShelfAnalysisPipeline:
                     "priority_score": alert["severity"] * np.random.uniform(1, 3),
                 })
         except Exception as e:
-            print(f"  ⚠ Could not save to database: {e}")
+            print(f"  [WARN] Could not save to database: {e}")
 
 
 def process_shelf_image(image_path: str, store_id: str = "STORE01", aisle_id: str = "A01") -> dict:

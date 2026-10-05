@@ -1,4 +1,4 @@
-"""
+﻿"""
 Generate synthetic shelf images by creating colored product blocks on shelf backgrounds.
 Simulates varying stock levels, misplaced products, and empty sections.
 """
@@ -166,7 +166,7 @@ def generate_all_shelf_images():
         img_path = SAMPLE_IMAGES_DIR / filename
         img.save(img_path, "PNG")
         all_annotations[scenario["name"]] = annotations
-        print(f"  ✓ {filename}: {len(annotations)} product regions, fill_rate={scenario['fill_rate']}")
+        print(f"  [OK] {filename}: {len(annotations)} product regions, fill_rate={scenario['fill_rate']}")
 
     # Generate per-store images (3 per store, different stock levels)
     for store_num in range(1, 4):
@@ -179,9 +179,9 @@ def generate_all_shelf_images():
             filename = f"store{store_num:02d}_camera{i+1}.png"
             img_path = SAMPLE_IMAGES_DIR / filename
             img.save(img_path, "PNG")
-            print(f"  ✓ {filename}: fill={fill}")
+            print(f"  [OK] {filename}: fill={fill}")
 
-    print(f"  ✓ All images saved to {SAMPLE_IMAGES_DIR}")
+    print(f"  [OK] All images saved to {SAMPLE_IMAGES_DIR}")
     return all_annotations
 
 

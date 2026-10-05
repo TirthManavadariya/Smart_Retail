@@ -1,4 +1,4 @@
-"""
+﻿"""
 Synthetic customer engagement data generator.
 Simulates 'views vs picks' behavior per SKU per store by reading actual POS
 sales data and inferring impression counts based on shelf-visibility heuristics.
@@ -118,7 +118,7 @@ def save_engagement_data(pos_df: Optional[pd.DataFrame] = None) -> pd.DataFrame:
     df = generate_engagement_data(pos_df)
     output_path = POS_DATA_DIR / "customer_engagement.csv"
     df.to_csv(output_path, index=False)
-    print(f"  ✓ Saved {len(df):,} engagement records to {output_path}")
+    print(f"  [OK] Saved {len(df):,} engagement records to {output_path}")
     print(f"    Avg conversion rate: {df['conversion_rate'].mean():.2%}")
     print(f"    Total impressions:   {df['impression_count'].sum():,}")
     print(f"    Total picks:         {df['pick_count'].sum():,}")

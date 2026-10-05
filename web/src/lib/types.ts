@@ -256,6 +256,51 @@ export interface PlanogramGrid {
   }[];
 }
 
+// ── Auth ──────────────────────────────────────────────────────────────
+export interface AuthUser {
+  user_id: number;
+  username: string;
+  role: 'manager' | 'staff';
+  full_name: string;
+  email?: string;
+}
+
+// ── Staff ─────────────────────────────────────────────────────────────
+export interface StaffMember {
+  user_id: number;
+  username: string;
+  role: string;
+  full_name: string;
+  email: string;
+  phone: string;
+  is_active: number;
+  created_at: string;
+}
+
+// ── Tasks ─────────────────────────────────────────────────────────────
+export interface Task {
+  task_id: number;
+  title: string;
+  description: string;
+  assigned_to: number;
+  assigned_by: number;
+  status: 'pending' | 'in_progress' | 'completed';
+  priority: 'low' | 'medium' | 'high' | 'urgent';
+  location: string;
+  due_date: string;
+  created_at: string;
+  completed_at: string | null;
+  assignee_name: string;
+  assigner_name: string;
+}
+
+export interface TaskStats {
+  total: number;
+  pending: number;
+  in_progress: number;
+  completed: number;
+}
+
 // ── Analytics ─────────────────────────────────────────────────────────
 export interface AnalyticsKpis {
   revenue_protected: string;

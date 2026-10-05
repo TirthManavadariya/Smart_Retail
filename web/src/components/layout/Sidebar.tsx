@@ -1,8 +1,9 @@
-import { NavLink } from 'react-router-dom';
-import { ChevronLeft, PanelLeftClose, ScanBarcode, UserRound } from 'lucide-react';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { ChevronLeft, PanelLeftClose, ScanBarcode, UserRound, LogOut } from 'lucide-react';
 import { NAV_ROUTES, NAV_SECTIONS } from '@/app/routes';
 import { useAlertInbox } from '@/hooks/queries';
 import { useActiveStore } from '@/hooks/useActiveStore';
+import { useAuth } from '@/hooks/useAuth';
 import { cn } from '@/lib/cn';
 
 export function Sidebar({
@@ -19,6 +20,13 @@ export function Sidebar({
   const { storeId } = useActiveStore();
   const { data: inbox } = useAlertInbox(storeId);
   const alertCount = inbox?.alerts.length ?? 0;
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await logout();
+    navigate('/login');
+  };
 
   return (
     <>
@@ -68,7 +76,9 @@ export function Sidebar({
         {/* Nav */}
         <nav className="flex-1 overflow-y-auto overflow-x-hidden px-2.5 py-4">
           {NAV_SECTIONS.map((section) => {
-            const items = NAV_ROUTES.filter((route) => route.section === section);
+            const items = NAV_ROUTES.filter(
+              (route) => route.section === section && (!route.managerOnly || user?.role === 'manager'),
+            );
             if (items.length === 0) return null;
 
             return (
@@ -154,9 +164,20 @@ export function Sidebar({
             </span>
             {!collapsed && (
               <div className="min-w-0 flex-1">
-                <p className="truncate text-xs font-semibold text-content">Arjun Sharma</p>
-                <p className="truncate text-2xs text-content-faint">Store Operations Lead</p>
+                <p className="truncate text-xs font-semibold text-content">{user?.full_name ?? 'User'}</p>
+                <p className="truncate text-2xs text-content-faint">
+                  {user?.role === 'manager' ? 'Manager' : 'Staff Member'}
+                </p>
               </div>
+            )}
+            {!collapsed && (
+              <button
+                onClick={handleLogout}
+                className="ml-auto rounded-lg p-1.5 text-content-faint transition-colors hover:bg-danger/10 hover:text-danger"
+                title="Sign out"
+              >
+                <LogOut className="size-4" />
+              </button>
             )}
           </div>
 

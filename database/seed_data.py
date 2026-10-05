@@ -1,4 +1,4 @@
-"""
+﻿"""
 Database seeding script — runs all data generators and loads data into SQLite.
 """
 import sys
@@ -38,7 +38,7 @@ def seed_database():
             })
         except Exception:
             pass  # Already exists
-    print(f"  ✓ {len(catalog)} products loaded")
+    print(f"  [OK] {len(catalog)} products loaded")
 
     # 2. Load store definitions
     print("\n[2/6] Store Definitions")
@@ -53,7 +53,7 @@ def seed_database():
             })
         except Exception:
             pass
-    print(f"  ✓ {len(STORE_CONFIG)} stores loaded")
+    print(f"  [OK] {len(STORE_CONFIG)} stores loaded")
 
     # 3. Generate shelf assignments
     print("\n[3/6] Shelf Assignments")
@@ -79,7 +79,7 @@ def seed_database():
                     except Exception:
                         pass
                     sku_idx += 1
-    print(f"  ✓ {shelf_count} shelf sections created")
+    print(f"  [OK] {shelf_count} shelf sections created")
 
     # 4. Generate POS data
     print("\n[4/6] POS Transaction Data")
@@ -91,7 +91,7 @@ def seed_database():
     for i in range(0, len(pos_records), batch_size):
         batch = pos_records[i:i + batch_size]
         db.insert_many("pos_transactions", batch)
-    print(f"  ✓ {len(pos_records):,} POS records loaded into database")
+    print(f"  [OK] {len(pos_records):,} POS records loaded into database")
 
     # 5. Generate weather data
     print("\n[5/6] Weather & Event Data")
@@ -100,7 +100,7 @@ def seed_database():
     for i in range(0, len(weather_records), batch_size):
         batch = weather_records[i:i + batch_size]
         db.insert_many("weather_data", batch)
-    print(f"  ✓ {len(weather_records):,} weather records loaded")
+    print(f"  [OK] {len(weather_records):,} weather records loaded")
 
     # 6. Generate planograms & shelf images
     print("\n[6/6] Planograms & Shelf Images")
@@ -108,7 +108,7 @@ def seed_database():
     generate_all_shelf_images()
 
     print("\n" + "=" * 60)
-    print("  ✓ DATABASE SEEDING COMPLETE")
+    print("  [OK] DATABASE SEEDING COMPLETE")
     print(f"  Database: {DATABASE_PATH}")
     print("=" * 60)
 

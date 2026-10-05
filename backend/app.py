@@ -1,4 +1,4 @@
-"""
+﻿"""
 ShelfIQ — Flask REST API Backend
 Entry point: registers all API blueprints, enables CORS,
 and serves the frontend static files.
@@ -27,10 +27,14 @@ from api.forecast import forecast_bp
 from api.alerts import alerts_bp
 from api.optimizer import optimizer_bp
 from api.analytics import analytics_bp
+from api.auth import auth_bp
+from api.staff import staff_bp
+from api.tasks import tasks_bp
 
 
 def create_app() -> Flask:
     app = Flask(__name__, static_folder=None)
+    app.secret_key = "shelfiq-secret-key-change-in-production"
     # Permissive CORS for the web frontend. The React dev server (Vite, :5173)
     # and any other origin may call the API during development.
     CORS(app, resources={r"/api/*": {"origins": "*"}})
@@ -43,7 +47,7 @@ def create_app() -> Flask:
         from database.seed_runtime import seed_if_empty
         seed_if_empty()
     except Exception as exc:  # pragma: no cover - defensive
-        print(f"  ⚠ Startup seeding skipped: {exc}")
+        print(f"  [WARN] Startup seeding skipped: {exc}")
 
     # ── Register API blueprints ──────────────────────────────────────
     app.register_blueprint(stores_bp)
@@ -54,6 +58,9 @@ def create_app() -> Flask:
     app.register_blueprint(alerts_bp)
     app.register_blueprint(optimizer_bp)
     app.register_blueprint(analytics_bp)
+    app.register_blueprint(auth_bp)
+    app.register_blueprint(staff_bp)
+    app.register_blueprint(tasks_bp)
 
     # ── Serve frontend static files ──────────────────────────────────
     # Prefer the built React app in web/dist. If it hasn't been built yet

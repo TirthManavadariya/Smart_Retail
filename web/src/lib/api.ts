@@ -3,6 +3,7 @@ import type {
   AlertInbox,
   AnalyticsKpis,
   AssociatesPayload,
+  AuthUser,
   CategoryPerformance,
   CompliancePayload,
   DetectionResult,
@@ -17,9 +18,12 @@ import type {
   ReplenishmentRow,
   SeriesXY,
   ShelfStatusRow,
+  StaffMember,
   StockoutHeatmap,
   Store,
+  Task,
   TaskBoard,
+  TaskStats,
   TopPerformer,
   TrafficPayload,
 } from './types';
@@ -122,6 +126,33 @@ async function post<T>(path: string, body?: unknown, params?: Params, timeoutMs 
       headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
       // The API's POST handlers call request.get_json(), which 415s without a body.
       body: JSON.stringify(body ?? {}),
+    });
+    return await parse<T>(res);
+  } catch (err) {
+    throw normalize(err);
+  }
+}
+
+async function put<T>(path: string, body?: unknown, params?: Params, timeoutMs = 20_000): Promise<T> {
+  try {
+    const res = await fetch(buildUrl(path, params), {
+      method: 'PUT',
+      signal: AbortSignal.timeout(timeoutMs),
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify(body ?? {}),
+    });
+    return await parse<T>(res);
+  } catch (err) {
+    throw normalize(err);
+  }
+}
+
+async function del<T>(path: string, params?: Params, timeoutMs = 20_000): Promise<T> {
+  try {
+    const res = await fetch(buildUrl(path, params), {
+      method: 'DELETE',
+      signal: AbortSignal.timeout(timeoutMs),
+      headers: { Accept: 'application/json' },
     });
     return await parse<T>(res);
   } catch (err) {
@@ -245,6 +276,34 @@ export const api = {
   settings: {
     save: (settings: Record<string, unknown>) =>
       post<{ status: string; settings: Record<string, unknown> }>('/api/settings/save', settings),
+  },
+
+  auth: {
+    login: (username: string, password: string) =>
+      post<{ user: AuthUser }>('/api/auth/login', { username, password }),
+    logout: () => post<{ status: string }>('/api/auth/logout'),
+    me: () => get<{ user: AuthUser }>('/api/auth/me'),
+  },
+
+  staff: {
+    list: () => get<{ staff: StaffMember[] }>('/api/staff/list'),
+    add: (data: { username: string; password: string; full_name: string; email?: string; phone?: string }) =>
+      post<{ status: string; user: StaffMember }>('/api/staff/add', data),
+    update: (userId: number, data: { full_name?: string; email?: string; phone?: string; password?: string; is_active?: boolean }) =>
+      put<{ status: string; user: StaffMember }>(`/api/staff/${userId}`, data),
+    remove: (userId: number) =>
+      del<{ status: string; user_id: number }>(`/api/staff/${userId}`),
+  },
+
+  tasks: {
+    list: () => get<{ tasks: Task[] }>('/api/tasks'),
+    create: (data: { title: string; description?: string; assigned_to: number; priority?: string; location?: string; due_date?: string }) =>
+      post<{ status: string; task: Task }>('/api/tasks', data),
+    update: (taskId: number, data: { status?: string; title?: string; description?: string; assigned_to?: number; priority?: string; location?: string; due_date?: string }) =>
+      put<{ status: string; task: Task }>(`/api/tasks/${taskId}`, data),
+    remove: (taskId: number) =>
+      del<{ status: string; task_id: number }>(`/api/tasks/${taskId}`),
+    stats: () => get<TaskStats>('/api/tasks/stats'),
   },
 };
 

@@ -1,4 +1,4 @@
-"""
+﻿"""
 Idempotent runtime seeding.
 
 Called once at server startup. Ensures the core tables exist and fills any
@@ -23,6 +23,7 @@ def seed_if_empty() -> None:
     _seed_engagement(db, Path(POS_DATA_DIR))
     _seed_detections(db, STORE_CONFIG)
     _seed_alerts(db, STORE_CONFIG)
+    _seed_users(db)
 
 
 def _count(db, table: str) -> int:
@@ -58,7 +59,7 @@ def _seed_stores(db, store_config: dict) -> None:
         try:
             db.insert_many("stores", rows)
         except Exception as exc:
-            print(f"  ⚠ store seeding skipped: {exc}")
+            print(f"  [WARN] store seeding skipped: {exc}")
 
 
 # ── Customer engagement (from CSV) ───────────────────────────────────
@@ -94,7 +95,7 @@ def _seed_engagement(db, pos_data_dir: Path) -> None:
         if rows:
             db.insert_many("customer_engagement", rows)
     except Exception as exc:
-        print(f"  ⚠ engagement seeding skipped: {exc}")
+        print(f"  [WARN] engagement seeding skipped: {exc}")
 
 
 # ── Detections ───────────────────────────────────────────────────────
@@ -133,7 +134,7 @@ def _seed_detections(db, store_config: dict) -> None:
         try:
             db.insert_many("detections", rows)
         except Exception as exc:
-            print(f"  ⚠ detection seeding skipped: {exc}")
+            print(f"  [WARN] detection seeding skipped: {exc}")
 
 
 # ── Alerts ───────────────────────────────────────────────────────────
@@ -183,4 +184,54 @@ def _seed_alerts(db, store_config: dict) -> None:
         try:
             db.insert_many("alerts", rows)
         except Exception as exc:
-            print(f"  ⚠ alert seeding skipped: {exc}")
+            print(f"  [WARN] alert seeding skipped: {exc}")
+
+
+# ── Users (manager + staff) ─────────────────────────────────────────
+def _seed_users(db) -> None:
+    """Seed 1 manager and 3 staff members for testing."""
+    if _count(db, "users") != 0:
+        return
+    rows = [
+        {
+            "username": "manager",
+            "password": "manager123",
+            "role": "manager",
+            "full_name": "Arjun Sharma",
+            "email": "arjun@shelfiq.com",
+            "phone": "+91-9876543210",
+            "is_active": 1,
+        },
+        {
+            "username": "priya",
+            "password": "staff123",
+            "role": "staff",
+            "full_name": "Priya Mehta",
+            "email": "priya@shelfiq.com",
+            "phone": "+91-9876543211",
+            "is_active": 1,
+        },
+        {
+            "username": "rajesh",
+            "password": "staff123",
+            "role": "staff",
+            "full_name": "Rajesh Desai",
+            "email": "rajesh@shelfiq.com",
+            "phone": "+91-9876543212",
+            "is_active": 1,
+        },
+        {
+            "username": "amit",
+            "password": "staff123",
+            "role": "staff",
+            "full_name": "Amit Kumar",
+            "email": "amit@shelfiq.com",
+            "phone": "+91-9876543213",
+            "is_active": 1,
+        },
+    ]
+    try:
+        db.insert_many("users", rows)
+        print("  [OK] 4 users seeded (1 manager + 3 staff)")
+    except Exception as exc:
+        print(f"  [WARN] user seeding skipped: {exc}")

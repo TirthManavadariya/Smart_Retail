@@ -1,4 +1,4 @@
-"""
+﻿"""
 YOLOv8-based shelf product detector.
 Uses Ultralytics YOLOv8 for detecting products on retail shelves.
 Supports preprocessing for varying lighting and camera angles.
@@ -65,9 +65,9 @@ class ShelfDetector:
             self.model = YOLO(resolved_path)
             is_custom = "shelfiq" in str(resolved_path).lower()
             tag = "CUSTOM-TRAINED" if is_custom else "PRE-TRAINED"
-            print(f"  ✓ YOLOv8 model loaded [{tag}]: {resolved_path}")
+            print(f"  [OK] YOLOv8 model loaded [{tag}]: {resolved_path}")
         except Exception as e:
-            print(f"  ⚠ YOLOv8 not available ({e}), using synthetic detection mode")
+            print(f"  [WARN] YOLOv8 not available ({e}), using synthetic detection mode")
             self.use_synthetic = True
 
     def preprocess_image(self, image: np.ndarray) -> np.ndarray:

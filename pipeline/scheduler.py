@@ -1,4 +1,4 @@
-"""
+﻿"""
 Periodic job scheduler — runs shelf analysis, forecast refresh, and alert digests.
 Uses APScheduler for background task execution.
 """
@@ -50,9 +50,9 @@ class SimpleScheduler:
         """Start the scheduler."""
         if self.use_apscheduler and self.scheduler:
             self.scheduler.start()
-            print("  ✓ APScheduler started")
+            print("  [OK] APScheduler started")
         else:
-            print("  ✓ Manual scheduler ready (call run_once() to execute jobs)")
+            print("  [OK] Manual scheduler ready (call run_once() to execute jobs)")
 
     def stop(self):
         """Stop the scheduler."""
@@ -67,7 +67,7 @@ class SimpleScheduler:
                 job["func"]()
                 job["last_run"] = datetime.now().isoformat()
             except Exception as e:
-                print(f"  ⚠ Job {job_id} failed: {e}")
+                print(f"  [WARN] Job {job_id} failed: {e}")
 
     def get_status(self) -> list:
         """Get status of all jobs."""

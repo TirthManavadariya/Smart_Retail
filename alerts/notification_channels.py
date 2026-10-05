@@ -1,4 +1,4 @@
-"""
+﻿"""
 Multi-channel notification delivery — dashboard push, email digest, and logging.
 """
 import sys
@@ -75,7 +75,7 @@ class EmailNotifier:
 
             return True
         except Exception as e:
-            print(f"  ⚠ Email send failed: {e}")
+            print(f"  [WARN] Email send failed: {e}")
             self._log_email(alerts, subject)
             return False
 

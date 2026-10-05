@@ -1,4 +1,4 @@
-"""
+﻿"""
 Monitoring endpoints — Shelf status, aisle detail, planogram compliance, traffic.
 Extracts logic from dashboard/views/shelf_monitoring.py
 """
@@ -32,7 +32,7 @@ def aisle_detail():
     delta_pct = round(float(np.random.uniform(2, 8)), 1)
 
     detections = [
-        {"icon": "critical", "emoji": "⚠", "sku": "Soda 12pk - SKU 8821",
+        {"icon": "critical", "emoji": "[WARN]", "sku": "Soda 12pk - SKU 8821",
          "msg": "Level Critical: 0 units remaining on shelf.", "time": "14:22:11"},
         {"icon": "warning", "emoji": "📦", "sku": "Iced Tea 1L - SKU 4432",
          "msg": "Planogram mismatch detected (Position 4B).", "time": "14:19:45"},

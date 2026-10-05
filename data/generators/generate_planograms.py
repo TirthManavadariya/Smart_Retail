@@ -1,4 +1,4 @@
-"""
+﻿"""
 Generate sample planogram JSON definitions for each store.
 Defines expected shelf layout: which SKU goes where, expected facings, and pricing.
 """
@@ -86,7 +86,7 @@ def generate_planograms():
             for a in planogram["aisles"]
             for s in a["shelves"]
         )
-        print(f"  ✓ {store_id}: {len(planogram['aisles'])} aisles, {total_sections} sections → {output_path}")
+        print(f"  [OK] {store_id}: {len(planogram['aisles'])} aisles, {total_sections} sections -> {output_path}")
 
     return planogram
 

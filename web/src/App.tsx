@@ -1,8 +1,9 @@
 import { Suspense, lazy } from 'react';
-import { Link, Route, Routes } from 'react-router-dom';
+import { Link, Route, Routes, Navigate, useLocation } from 'react-router-dom';
 import { Loader2 } from 'lucide-react';
 import { AppShell } from './components/layout/AppShell';
 import { EmptyState } from './components/ui/States';
+import { useAuth } from './hooks/useAuth';
 
 // Route-level code splitting keeps the initial bundle small; the heavy pages
 // (charts, image scanner) only load when visited.
@@ -13,6 +14,9 @@ const Forecasts = lazy(() => import('./pages/Forecasts'));
 const Alerts = lazy(() => import('./pages/Alerts'));
 const Optimizer = lazy(() => import('./pages/Optimizer'));
 const Settings = lazy(() => import('./pages/Settings'));
+const Login = lazy(() => import('./pages/Login'));
+const Tasks = lazy(() => import('./pages/Tasks'));
+const StaffManagement = lazy(() => import('./pages/StaffManagement'));
 
 function RouteFallback() {
   return (
@@ -23,6 +27,15 @@ function RouteFallback() {
       </p>
     </div>
   );
+}
+
+function ProtectedRoute({ children }: { children: React.ReactNode }) {
+  const { user, loading } = useAuth();
+  const location = useLocation();
+
+  if (loading) return <RouteFallback />;
+  if (!user) return <Navigate to="/login" state={{ from: location }} replace />;
+  return <>{children}</>;
 }
 
 function NotFound() {
@@ -46,7 +59,11 @@ function NotFound() {
 export function App() {
   return (
     <Routes>
-      <Route element={<AppShell />}>
+      {/* Public route — login page */}
+      <Route path="/login" element={<Login />} />
+
+      {/* Protected routes — require authentication */}
+      <Route element={<ProtectedRoute><AppShell /></ProtectedRoute>}>
         <Route
           path="/"
           element={
@@ -92,6 +109,22 @@ export function App() {
           element={
             <Suspense fallback={<RouteFallback />}>
               <Optimizer />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/tasks"
+          element={
+            <Suspense fallback={<RouteFallback />}>
+              <Tasks />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/staff"
+          element={
+            <Suspense fallback={<RouteFallback />}>
+              <StaffManagement />
             </Suspense>
           }
         />

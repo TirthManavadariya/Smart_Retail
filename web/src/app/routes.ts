@@ -6,6 +6,8 @@ import {
   Sparkles,
   TrendingUp,
   Video,
+  ClipboardList,
+  Users,
   type LucideIcon,
 } from 'lucide-react';
 
@@ -20,6 +22,8 @@ export interface RouteMeta {
   section: NavSection;
   /** Marks views that poll live telemetry — drives the "live" dot in the nav. */
   live?: boolean;
+  /** Only visible to managers. */
+  managerOnly?: boolean;
 }
 
 /**
@@ -71,6 +75,21 @@ export const NAV_ROUTES: RouteMeta[] = [
     icon: BellRing,
     section: 'Response',
     live: true,
+  },
+  {
+    path: '/tasks',
+    label: 'Tasks',
+    title: 'Task Management',
+    icon: ClipboardList,
+    section: 'Response',
+  },
+  {
+    path: '/staff',
+    label: 'Staff',
+    title: 'Staff Management',
+    icon: Users,
+    section: 'System',
+    managerOnly: true,
   },
   {
     path: '/settings',

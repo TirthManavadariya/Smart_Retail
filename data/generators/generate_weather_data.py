@@ -1,4 +1,4 @@
-"""
+﻿"""
 Generate synthetic weather and local event data for demand forecast enrichment.
 Covers the same 2-year period as POS data for all store locations.
 """
@@ -149,7 +149,7 @@ def generate_weather_data() -> pd.DataFrame:
     df = pd.DataFrame(records)
     output_path = POS_DATA_DIR / "weather_data.csv"
     df.to_csv(output_path, index=False)
-    print(f"  ✓ Saved {len(df):,} weather records to {output_path}")
+    print(f"  [OK] Saved {len(df):,} weather records to {output_path}")
     return df
 
 
